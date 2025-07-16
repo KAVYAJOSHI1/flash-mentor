@@ -1,0 +1,434 @@
+/* FlashAssistantBox.css */
+
+/* --- Global Variables (Assuming these are defined globally, but included for self-containment) --- */
+/* IMPORTANT: For best practice, these should ideally be in a single, globally imported CSS file.
+   However, if this file is loaded independently, keeping them here ensures styles are applied.
+   If you have a global variables file, you can remove this :root block. */
+:root {
+    --primary-color: #6a0578; /* Deep Purple */
+    --secondary-color: #3f0071; /* Darker Purple */
+    --accent-color: #f72585; /* Vibrant Pink/Magenta */
+    --success-color: #00e676; /* Electric Green */
+    --warning-color: #ffeb3b; /* Bright Yellow */
+    --danger-color: #ef5350; /* Fiery Red */
+
+    --dark-bg: #0d011f; /* Unified background color (from body) */
+    --card-bg: #1e0342; /* Deep violet for cards/containers */
+    
+    --text-primary: #ffffff; /* White */
+    --text-secondary: #e0e0e0; /* Light grey */
+    --text-muted: #b3b3b3; /* Muted grey */
+    
+    --border-color: #3b0a70; /* Purple border */
+    --shadow-color: rgba(0, 0, 0, 0.6); /* Darker shadow */
+
+    --gradient-1: linear-gradient(135deg, #6a0578, #3f0071); /* Primary (Purple-Violet) */
+    --gradient-2: linear-gradient(135deg, #f72585, #7209b7); /* Accent (Pink-Purple) */
+    --gradient-3: linear-gradient(135deg, #4895ef, #4361ee); /* Energetic Blue */
+    --gradient-4: linear-gradient(135deg, #00e676, #3f0071); /* Green-Purple (Unique) */
+
+    --glass-fill: rgba(255, 255, 255, 0.08); /* Lighter glass fill for headers/buttons */
+    --glass-border: rgba(255, 255, 255, 0.15); /* Slightly more prominent glass border */
+}
+
+.flash-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  /* Use card-bg and a subtle gradient for depth */
+  background: var(--card-bg); 
+  border-radius: 20px;
+  box-shadow: 0 20px 40px var(--shadow-color), 0 10px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  display: flex;
+  flex-direction: column;
+  z-index: 10000;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color); /* Use theme border color */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flash-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 25px 50px var(--shadow-color), 0 15px 30px rgba(0, 0, 0, 0.35); /* Darker on hover */
+}
+
+/* This is applied via JS when dragging starts */
+.flash-box.dragging {
+  transition: none; /* No transition during drag */
+  transform: rotate(2deg); /* Subtle rotation for drag feedback */
+  box-shadow: 0 30px 60px var(--shadow-color); /* More intense shadow during drag */
+  cursor: grabbing; /* Show grabbing cursor */
+}
+
+/* Glassmorphism effect enhancement */
+.flash-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--glass-fill); /* Use glass fill variable */
+  border-radius: 20px;
+  pointer-events: none; /* Allows clicks to pass through to elements below */
+  z-index: -1; /* Place behind content but above box background */
+}
+
+/* Header */
+.flash-header {
+  background: var(--glass-fill); /* Use glass fill for header background */
+  color: var(--text-primary); /* Primary text color */
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--glass-border); /* Use glass border */
+  backdrop-filter: blur(20px);
+  position: relative;
+  cursor: grab; /* Indicates draggable area */
+  user-select: none; /* Prevent text selection during drag */
+  display: flex; /* For centering content within header */
+  align-items: center;
+  justify-content: center;
+}
+
+.flash-header::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--success-color); /* Use success color for pulse dot */
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 230, 118, 0.5); /* Shadow matching success color */
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  50% { opacity: 0.7; transform: translateY(-50%) scale(1.1); }
+}
+
+/* Body */
+.flash-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  /* Darker background for messages, slightly transparent for blur effect */
+  background: var(--dark-bg); 
+  backdrop-filter: blur(15px); /* Slightly less blur on body */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flash-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.flash-body::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--dark-bg) 90%, var(--border-color) 10%); /* Track color from dark background */
+  border-radius: 3px;
+}
+
+.flash-body::-webkit-scrollbar-thumb {
+  background: var(--border-color); /* Thumb color from border */
+  border-radius: 3px;
+}
+
+.flash-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color); /* Primary color on hover */
+}
+
+/* Placeholder */
+.flash-placeholder {
+  text-align: center;
+  color: var(--text-muted); /* Muted text color */
+  font-style: italic;
+  margin: auto;
+  padding: 20px;
+  opacity: 0.8;
+}
+
+/* Messages */
+.flash-msg {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* User Messages */
+.user-msg {
+  background: var(--gradient-1); /* Primary gradient for user messages */
+  color: white;
+  align-self: flex-end;
+  margin-left: auto;
+  position: relative;
+  border-top-right-radius: 4px; 
+}
+
+.user-msg::after {
+  content: '';
+  position: absolute;
+  bottom: 0px; 
+  right: -8px; 
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent; 
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--secondary-color); /* Match user bubble bottom color */
+  transform: rotate(45deg); 
+  transform-origin: 0 100%;
+}
+
+/* AI Messages */
+.flash-msg-ai {
+  background: var(--dark-bg); /* Dark background for AI messages */
+  color: var(--text-secondary); /* Secondary text color */
+  align-self: flex-start;
+  border: 1px solid var(--border-color); /* Border color for AI messages */
+  position: relative;
+  border-top-left-radius: 4px;
+}
+
+.flash-msg-ai::after {
+  content: '';
+  position: absolute;
+  bottom: 0px; 
+  left: -8px; 
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent; 
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--dark-bg); /* Match AI bubble bottom color */
+  transform: rotate(-45deg); 
+  transform-origin: 100% 100%;
+}
+
+/* Footer */
+.flash-footer {
+  padding: 16px 20px;
+  background: var(--glass-fill); /* Glass fill for footer */
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border); /* Glass border */
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Input */
+.flash-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color); /* Theme border for input */
+  border-radius: 25px;
+  background: var(--dark-bg); /* Dark background for input */
+  color: var(--text-primary); /* Primary text color */
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.flash-input:focus {
+  border-color: var(--primary-color); /* Primary color on focus */
+  background: var(--card-bg); /* Card background on focus */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 20%, transparent); /* Subtle glow */
+}
+
+.flash-input::placeholder {
+  color: var(--text-muted); /* Muted text color */
+}
+
+/* Buttons */
+.flash-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--glass-fill); /* Glass fill for buttons */
+  color: var(--text-primary); /* Primary text color */
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border); /* Glass border for buttons */
+}
+
+.flash-btn:hover {
+  background: color-mix(in srgb, var(--glass-fill) 80%, white); /* Slightly lighter on hover */
+  transform: scale(1.05);
+}
+
+.flash-btn:active {
+  transform: scale(0.95);
+}
+
+.flash-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background: var(--border-color); /* Border color for disabled state */
+}
+
+/* Send Button */
+.send-btn {
+  background: var(--gradient-2); /* Accent gradient for send button */
+}
+.send-btn:hover {
+  background: color-mix(in srgb, var(--gradient-2) 80%, white); /* Darker on hover */
+}
+
+
+/* Mic Button */
+.mic-btn.listening {
+  background: var(--danger-color); /* Danger color for listening state */
+  animation: micPulse 1s infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger-color) 40%, transparent); } /* Shadow matching danger color */
+  50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+}
+
+/* --- Typing Indicator & Loading State --- */
+
+/* Wrapper for the typing indicator, keeps it aligned like an AI message */
+.typing-indicator-wrapper {
+  background: var(--dark-bg); /* Dark background for typing indicator */
+  color: var(--text-secondary); /* Secondary text color */
+  align-self: flex-start;
+  border: 1px solid var(--border-color); /* Border color */
+  position: relative;
+  border-top-left-radius: 4px; /* Match AI message bubble radius */
+  max-width: 150px; /* Limit width */
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between dots and text */
+}
+
+.typing-indicator-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0px; 
+  left: -8px; 
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid var(--dark-bg); /* Match background color */
+  transform: rotate(-45deg);
+  transform-origin: 100% 100%;
+}
+
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typing-dot {
+  background: var(--text-muted); /* Muted text color for dots */
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: typingDots 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDots {
+  0%, 60%, 100% { transform: scale(0.8); opacity: 0.5; }
+  30% { transform: scale(1); opacity: 1; }
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .flash-box {
+    width: 300px; /* Slightly smaller on tablets */
+    height: 420px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .flash-header {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .flash-body {
+    padding: 16px;
+  }
+  
+  .flash-msg {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+  
+  .flash-footer {
+    padding: 12px 16px;
+  }
+  
+  .flash-input {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  
+  .flash-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flash-box {
+    width: 90%; /* Take up more width on small phones */
+    height: 70vh; /* Responsive height */
+    bottom: 10px;
+    right: 5%; /* Centered horizontally */
+    left: 5%; /* Centered horizontally */
+    max-width: 350px; /* Prevent it from getting too wide on large phones */
+  }
+}
+
+/* Minimize Animation (keep as is) */
+.flash-box.minimized {
+  height: 60px;
+  overflow: hidden;
+}
+
+.flash-box.minimized .flash-body,
+.flash-box.minimized .flash-footer {
+  display: none;
+}

@@ -1,0 +1,772 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+/* --- Global Variables for Theming (Ensure consistency with other CSS files) --- */
+/* These should ideally be in a single, globally imported CSS file for maintainability.
+   For this example, they are re-declared here to ensure self-containment. */
+:root {
+  --primary-color: #6a0578; /* Deep Purple */
+  --secondary-color: #3f0071; /* Darker Purple */
+  --accent-color: #f72585; /* Vibrant Pink/Magenta */
+  --success-color: #00e676; /* Electric Green */
+  --warning-color: #ffeb3b; /* Bright Yellow */
+  --danger-color: #ef5350; /* Fiery Red */
+
+  --dark-bg: #0d011f; /* Unified main background color */
+  --dark-bg-light-tint: #130425; /* Slightly lighter tint of dark-bg for animation */
+  --card-bg: #1e0342; /* Deep violet for cards/containers */
+  
+  --text-primary: #ffffff; /* White */
+  --text-secondary: #e0e0e0; /* Light grey */
+  --text-muted: #b3b3b3; /* Muted grey */
+  
+  --border-color: #3b0a70; /* Purple border */
+  --shadow-color: rgba(0, 0, 0, 0.6); /* Darker shadow */
+
+  --gradient-1: linear-gradient(135deg, #6a0578, #3f0071); /* Primary (Purple-Violet) */
+  --gradient-2: linear-gradient(135deg, #f72585, #7209b7); /* Accent (Pink-Purple) */
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--dark-bg); /* Use the global background color */
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+}
+
+/* --- Home Container --- */
+.home-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 30px 100px; /* Increased bottom padding for FlashAssistantButton */
+  box-sizing: border-box;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1; /* Ensure content is above any background effects */
+}
+
+/* --- Hero Section (Header) --- */
+.hero-section {
+  background: var(--gradient-1); /* Use primary gradient */
+  padding: 40px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  box-shadow: 0 8px 25px var(--shadow-color);
+  position: relative;
+  overflow: hidden; /* For pseudo-elements glow */
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.1) 1%, transparent 70%);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-content {
+  flex-grow: 1;
+  z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+.greeting-section h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.greeting-section .hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+}
+
+.time-display {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+  margin-top: -80px; /* Overlap with hero section for visual appeal */
+  position: relative;
+  z-index: 2; /* Ensure it's above hero and dashboard */
+}
+
+.stat-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 25px 30px;
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.stat-card svg {
+  width: 38px;
+  height: 38px;
+  color: var(--accent-color); /* Default icon color */
+}
+
+.stat-card.total-time svg { color: var(--success-color); }
+.stat-card.active-sessions svg { color: var(--warning-color); }
+.stat-card.overall-progress svg { color: var(--primary-color); }
+
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Motivation Banner */
+.motivation-banner {
+  background: var(--dark-bg-light-tint); /* Slightly lighter dark background */
+  border-radius: 12px;
+  padding: 18px 25px;
+  margin: 40px 0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+  border: 1px solid var(--border-color);
+}
+
+.motivation-banner .motivation-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.motivation-banner svg {
+  width: 28px;
+  height: 28px;
+  color: var(--warning-color); /* Brain icon color */
+}
+
+/* --- Dashboard Grid --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* Base Card Styles */
+.dashboard-grid > div {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-grid > div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle separator */
+}
+
+.card-header svg {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-color); /* Default icon color for cards */
+}
+
+.card-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* --- Ongoing Activities Card --- */
+.ongoing-activities-card .card-header svg { color: var(--danger-color); }
+
+.ongoing-content {
+  flex-grow: 1; /* Make content fill available space */
+}
+
+.activity-item {
+  background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter background for items */
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activity-item:last-child {
+  margin-bottom: 0;
+}
+
+.activity-info {
+  flex-grow: 1;
+}
+
+.activity-info strong {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.activity-details {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-progress {
+  font-weight: 600;
+  color: var(--success-color); /* Green for progress */
+}
+
+.activity-next-step {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.continue-btn {
+  background: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.continue-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
+.continue-btn:hover {
+  background-color: color-mix(in srgb, var(--success-color) 85%, black);
+  transform: translateY(-2px);
+}
+
+/* --- Roadmap Overview Card --- */
+.roadmap-overview-card .card-header svg { color: var(--primary-color); }
+
+.roadmap-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-summary {
+  margin-bottom: 25px;
+}
+
+.roadmap-summary h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.progress-bar-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  height: 12px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  background: var(--gradient-2); /* Accent gradient for progress */
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.5s ease-out;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.upcoming-milestones {
+  margin-bottom: 25px;
+}
+
+.upcoming-milestones h4 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.milestone-item svg {
+  width: 22px;
+  height: 22px;
+  color: var(--warning-color); /* Clock icon */
+  flex-shrink: 0;
+}
+
+.milestone-details {
+  flex-grow: 1;
+}
+
+.milestone-details strong {
+  font-size: 1rem;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.milestone-details p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.view-milestone-btn {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.view-milestone-btn:hover {
+  background-color: color-mix(in srgb, var(--border-color) 80%, var(--primary-color));
+}
+
+.full-roadmap-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: auto; /* Push to bottom of card */
+  align-self: center; /* Center the button in the card */
+  width: 100%;
+  max-width: 250px;
+}
+
+.full-roadmap-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.full-roadmap-btn:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+  transform: translateY(-2px);
+}
+
+/* --- Smart Suggestions Card --- */
+.recommendations-card .card-header svg { color: var(--success-color); }
+
+.recommendations-content {
+  flex-grow: 1;
+}
+
+.recommendation-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative; /* For priority indicator */
+}
+
+.recommendation-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Priority indicators */
+.recommendation-item.high { border-left: 5px solid var(--danger-color); }
+.recommendation-item.medium { border-left: 5px solid var(--warning-color); }
+.recommendation-item.low { border-left: 5px solid var(--success-color); }
+
+
+.suggestion-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.suggestion-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-primary); /* Icon color will be set by JS based on type */
+}
+/* Specific icon colors for suggestions */
+.recommendation-item .suggestion-icon svg {
+    color: var(--accent-color); /* Default to accent */
+}
+.recommendation-item.high .suggestion-icon svg { color: var(--danger-color); }
+.recommendation-item.medium .suggestion-icon svg { color: var(--warning-color); }
+.recommendation-item.low .suggestion-icon svg { color: var(--success-color); }
+
+
+.suggestion-text {
+  flex-grow: 1;
+}
+
+.suggestion-text p {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.suggestion-text strong {
+  color: var(--text-primary);
+}
+
+.suggestion-action {
+  background-color: var(--secondary-color); /* Darker purple button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.suggestion-action:hover {
+  background-color: color-mix(in srgb, var(--secondary-color) 85%, black);
+}
+
+/* --- Empty States --- */
+.empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px dashed var(--border-color);
+  margin-top: 20px;
+}
+
+.empty-state .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.empty-state h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.empty-state p a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.empty-state p a:hover {
+    text-decoration: underline;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 1024px) {
+  .home-container {
+    padding: 15px 20px 100px;
+  }
+
+  .hero-section {
+    padding: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-section::before {
+    display: none; /* Hide complex background on smaller screens */
+  }
+
+  .greeting-section h1 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .stats-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: -60px; /* Adjust overlap */
+  }
+
+  .stat-card {
+    min-width: 150px;
+    flex: 1 1 calc(50% - 10px); /* Two columns on medium screens */
+    padding: 20px;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* Single column layout on tablets */
+    gap: 20px;
+  }
+
+  .activity-item, .milestone-item, .recommendation-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 10px;
+  }
+
+  .continue-btn, .view-milestone-btn, .suggestion-action, .full-roadmap-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .full-roadmap-btn {
+    max-width: none; /* Allow it to take full width of card */
+  }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 25px;
+    }
+    .greeting-section h1 {
+        font-size: 1.8rem;
+    }
+    .stats-grid {
+        margin-top: -40px; /* Even less overlap */
+        gap: 15px;
+    }
+    .stat-card {
+        padding: 18px;
+    }
+    .stat-number {
+        font-size: 1.6rem;
+    }
+    .card-header h3 {
+        font-size: 1.3rem;
+    }
+    .motivation-banner {
+        font-size: 0.95rem;
+        padding: 15px;
+    }
+    .activity-info strong {
+        font-size: 1rem;
+    }
+    .activity-details, .activity-next-step {
+        font-size: 0.8rem;
+    }
+    .roadmap-summary h4, .upcoming-milestones h4 {
+        font-size: 1.1rem;
+    }
+    .full-roadmap-btn {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+    .recommendation-item {
+        padding: 12px;
+    }
+    .suggestion-text p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 10px 15px 80px;
+  }
+
+  .hero-section {
+    padding: 20px;
+  }
+
+  .greeting-section h1 {
+    font-size: 1.5rem;
+    gap: 8px;
+  }
+  .greeting-section .hero-subtitle {
+      font-size: 0.9rem;
+  }
+
+  .time-display {
+    font-size: 0.85rem;
+  }
+
+  .stats-grid {
+    flex-direction: column; /* Stack stats vertically on small phones */
+    gap: 10px;
+    margin-top: -30px;
+  }
+  .stat-card {
+    padding: 15px;
+    width: 100%;
+    min-width: unset;
+  }
+  .stat-card svg {
+      width: 30px;
+      height: 30px;
+  }
+  .stat-number {
+      font-size: 1.4rem;
+  }
+  .stat-label {
+      font-size: 0.8rem;
+  }
+
+  .motivation-banner {
+    font-size: 0.85rem;
+    padding: 12px 15px;
+    gap: 10px;
+  }
+  .motivation-banner svg {
+      width: 24px;
+      height: 24px;
+  }
+
+  .dashboard-grid {
+    gap: 15px;
+  }
+
+  .dashboard-grid > div {
+    padding: 20px;
+  }
+
+  .card-header {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+  .card-header h3 {
+    font-size: 1.15rem;
+  }
+  .card-header svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .activity-item, .milestone-item, .recommendation-item {
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .continue-btn, .view-milestone-btn, .suggestion-action {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .empty-state h3 {
+      font-size: 1.1rem;
+  }
+  .empty-state p {
+      font-size: 0.85rem;
+  }
+}

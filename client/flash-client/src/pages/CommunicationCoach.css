@@ -1,0 +1,804 @@
+/* CommunicationCoach.css */
+
+/* --- Global Variables for Theming --- */
+:root {
+    --primary-color: #6a0578; /* Deep Purple */
+    --secondary-color: #3f0071; /* Darker Purple */
+    --accent-color: #f72585; /* Vibrant Pink/Magenta */
+    --success-color: #00e676; /* Electric Green */
+    --warning-color: #ffeb3b; /* Bright Yellow */
+    --danger-color: #ef5350; /* Fiery Red */
+
+    --dark-bg: #0d011f; /* Unified background color (from body) */
+    --card-bg: #1e0342; /* Deep violet for cards/containers */
+    
+    --text-primary: #ffffff; /* White */
+    --text-secondary: #e0e0e0; /* Light grey */
+    --text-muted: #b3b3b3; /* Muted grey */
+    
+    --border-color: #3b0a70; /* Purple border */
+    --shadow-color: rgba(0, 0, 0, 0.6); /* Darker shadow */
+
+    --gradient-1: linear-gradient(135deg, #6a0578, #3f0071); /* Primary (Purple-Violet) */
+    --gradient-2: linear-gradient(135deg, #f72585, #7209b7); /* Accent (Pink-Purple) */
+    --gradient-3: linear-gradient(135deg, #4895ef, #4361ee); /* Energetic Blue */
+    --gradient-4: linear-gradient(135deg, #00e676, #3f0071); /* Green-Purple (Unique) */
+
+    --glass-fill: rgba(255, 255, 255, 0.08); /* Lighter glass fill for headers/buttons */
+    --glass-border: rgba(255, 255, 255, 0.15); /* Slightly more prominent glass border */
+}
+
+/* --- VERY IMPORTANT: Ensure HTML, BODY, and your React root div take full height/width --- */
+html, body, #root { /* Replace #root with your actual React app's root element ID if different */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding doesn't push elements out */
+   /* overflow: hidden; /* Prevent unwanted scrollbars if elements slightly exceed viewport - often handled by app design */
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Consistent with other files */
+    color: var(--text-primary); /* Default text color from global */
+}
+
+/* --- General Layout & Background --- */
+.app-container {
+    min-height: 100vh; /* Minimum 100% of viewport height */
+    height: 100%; /* Will now stretch to 100% of body/html height */
+    width: 100%; /* Ensure it takes full width */
+    background: transparent; /* IMPORTANT: Make transparent to see body background */
+    padding: 1rem;
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    display: flex; /* Use flexbox for vertical alignment */
+    flex-direction: column;
+}
+
+.max-w-7xl {
+    max-width: 80rem; /* Corresponds to max-w-7xl in Tailwind */
+    width: 100%; /* Ensure it respects max-width but fills available width */
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1; /* Allows this element to take up remaining vertical space */
+    display: flex;
+    flex-direction: column;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.text-white {
+    color: white; /* Still relevant for white text on gradients */
+}
+
+.text-5xl {
+    font-size: 3rem; /* Tailwind text-5xl */
+    line-height: 1;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.drop-shadow-lg {
+    /* Use shadow color from variables */
+    filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.2)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.15));
+}
+
+.text-xl {
+    font-size: 1.25rem; /* Tailwind text-xl */
+    line-height: 1.75rem;
+}
+
+.opacity-90 {
+    opacity: 0.9;
+}
+
+/* --- Mode Toggle Buttons --- */
+.mode-toggle-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.mode-button {
+    padding: 1rem 2rem;
+    border-radius: 1.5rem; /* rounded-2xl */
+    font-weight: 600;
+    font-size: 1.125rem; /* text-lg */
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px); /* backdrop-blur-sm */
+    border: 2px solid var(--glass-border); /* Use glass border variable */
+    color: var(--text-primary); /* Use primary text color */
+    background-color: var(--glass-fill); /* Use glass fill variable */
+    cursor: pointer;
+}
+
+.mode-button:hover {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white); /* Slightly lighter on hover */
+}
+
+.mode-button.active {
+    background: var(--gradient-1); /* Use primary gradient */
+    color: white; /* White text on gradient */
+    box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color); /* Use global shadow */
+    border-color: transparent; /* No border for active */
+}
+
+/* --- Card Styles (Used by Vocab & Interview type selection) --- */
+.card {
+    background-color: var(--card-bg); /* Use card background */
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color); /* Use global shadow */
+    overflow: hidden;
+    flex-grow: 1; /* Allow card to grow */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color); /* Add border */
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: var(--gradient-1); /* Use primary gradient */
+    color: white;
+}
+
+.card-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700;
+}
+
+.clear-button {
+    background-color: var(--glass-fill); /* Use glass fill variable */
+    border: none;
+    color: var(--text-primary); /* Primary text color */
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white); /* Slightly lighter on hover */
+}
+
+/* --- Vocabulary Mode Styles --- */
+.vocab-container {
+    max-width: 64rem; /* max-w-5xl */
+    width: 100%; /* Ensure it takes full width within max-w */
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1; /* Allow chat content to take available space */
+    display: flex;
+    flex-direction: column;
+}
+
+.vocab-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--dark-bg); /* Match overall dark background */
+    border-bottom: 1px solid var(--border-color);
+}
+
+.get-new-words-button {
+    padding: 1rem 2rem;
+    background: var(--gradient-1); /* Use primary gradient */
+    color: white;
+    border: none;
+    border-radius: 1rem; /* rounded-2xl */
+    font-weight: 600;
+    font-size: 1rem;
+    min-width: 10rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.get-new-words-button:hover:not(:disabled) {
+    background: var(--gradient-2); /* Use accent gradient for hover */
+}
+
+.get-new-words-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.stop-speaking-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--danger-color);
+    border: none;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.stop-speaking-button:hover {
+    background-color: color-mix(in srgb, var(--danger-color) 80%, black);
+}
+
+.vocab-list {
+    flex-grow: 1; /* Allow list to take available space */
+    overflow-y: auto;
+    padding: 2rem;
+    background-color: var(--dark-bg); /* Background for vocab list area */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.vocab-empty {
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: var(--text-muted); /* Muted text color */
+}
+
+.vocab-empty h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary); /* Primary text color */
+}
+
+.vocab-empty p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary); /* Secondary text color */
+}
+
+.loading-spinner {
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--accent-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.vocab-item {
+    background-color: color-mix(in srgb, var(--primary-color) 8%, var(--dark-bg) 92%); /* Lighter tint of primary for vocab items */
+    border-radius: 1rem; /* rounded-2xl */
+    padding: 1.5rem;
+    border: 1px solid var(--border-color); /* Add a subtle border */
+}
+
+.vocab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.vocab-word {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 700;
+    color: var(--primary-color); /* Primary color */
+}
+
+.speak-vocab-button {
+    width: 2rem;
+    height: 2rem;
+    background-color: var(--glass-fill);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.speak-vocab-button:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white);
+}
+
+.speak-vocab-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.vocab-meaning,
+.vocab-example,
+.vocab-synonyms,
+.vocab-antonyms {
+    font-size: 0.9375rem; /* 15px - slightly smaller than base */
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.vocab-meaning strong,
+.vocab-example strong,
+.vocab-synonyms strong,
+.vocab-antonyms strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* --- Interview Mode Styles --- */
+.interview-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 72rem; /* max-w-6xl */
+    width: 100%; /* Ensure it takes full width within max-w */
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1; /* Allow grid to take available space */
+    height: auto; /* Allow content to define height */
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+    .interview-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.interview-types-card,
+.recent-sessions-card {
+    background-color: var(--card-bg); /* Use card background */
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color); /* Use global shadow */
+    padding: 2rem;
+    height: fit-content; /* Adjust height based on content */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color); /* Add border */
+}
+
+.interview-types-card h3,
+.recent-sessions-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary); /* Primary text color */
+    margin-bottom: 1.5rem;
+}
+
+.interview-type-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* space-y-4 */
+}
+
+.interview-type-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--dark-bg); /* Darker background for buttons */
+    border: 2px solid var(--border-color); /* Use border color */
+    border-radius: 1rem; /* rounded-2xl */
+    transition: all 0.3s ease;
+    text-align: left;
+    cursor: pointer;
+}
+
+.interview-type-button:hover {
+    border-color: var(--primary-color); /* Hover border color */
+    background-color: color-mix(in srgb, var(--primary-color) 8%, var(--dark-bg) 92%); /* Subtle primary tint on hover */
+}
+
+.interview-type-button .icon {
+    font-size: 1.875rem; /* text-3xl */
+    color: var(--accent-color); /* Use accent color for icons */
+}
+
+.interview-type-button .details {
+    flex: 1;
+}
+
+.interview-type-button h4 {
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600;
+    color: var(--text-primary); /* Primary text color */
+}
+
+.interview-type-button p {
+    color: var(--text-secondary); /* Secondary text color */
+}
+
+.recent-sessions-card .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.clear-sessions-button {
+    background-color: color-mix(in srgb, var(--danger-color) 15%, var(--dark-bg) 85%); /* Tint of danger color */
+    color: var(--danger-color); /* Danger color */
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.clear-sessions-button:hover {
+    background-color: color-mix(in srgb, var(--danger-color) 25%, var(--dark-bg) 75%); /* Stronger tint on hover */
+}
+
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* space-y-4 */
+}
+
+.session-list-empty {
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: var(--text-muted); /* Muted text color */
+}
+
+.session-list-empty p {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--dark-bg); /* Dark background for session item */
+    border-radius: 0.75rem; /* rounded-xl */
+    border: 1px solid var(--border-color); /* Border color */
+}
+
+.session-item .details {
+    flex: 1;
+}
+
+.session-item .title {
+    font-weight: 600;
+    color: var(--text-primary); /* Primary text color */
+    margin-bottom: 0.25rem;
+}
+
+.session-item .date {
+    font-size: 0.875rem;
+    color: var(--text-secondary); /* Secondary text color */
+}
+
+.session-item .score {
+    font-weight: 700;
+    color: var(--success-color); /* Success color */
+}
+
+
+/* --- Current Interview State --- */
+.interview-active-container {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background: transparent; /* IMPORTANT: Make transparent to see body background */
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex; /* Use flexbox for vertical alignment */
+    flex-direction: column;
+}
+
+.interview-card {
+    max-width: 72rem; /* max-w-6xl */
+    width: 100%; /* Ensure it takes full width within max-w */
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--card-bg); /* Use card background */
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 20px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color); /* Use global shadow */
+    overflow: hidden;
+    flex-grow: 1; /* Allow card to take remaining vertical space */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color); /* Add border */
+}
+
+.interview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    background: var(--gradient-1); /* Use primary gradient */
+    color: white;
+}
+
+.interview-header-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.interview-header-description {
+    color: var(--text-secondary); /* Secondary text color for description */
+}
+
+.interview-controls {
+    display: flex;
+    gap: 1rem; /* Space between shuffle and close buttons */
+    align-items: center; /* Vertically align them */
+}
+
+.shuffle-button {
+    background-color: var(--glass-fill);
+    border: 2px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.shuffle-button:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white);
+    border-color: var(--primary-color);
+}
+
+.shuffle-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+.close-interview-button {
+    width: 2.5rem; /* w-10 */
+    height: 2.5rem; /* h-10 */
+    background-color: var(--glass-fill); /* Use glass fill variable */
+    border: none;
+    border-radius: 9999px; /* rounded-full */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary); /* Primary text color */
+    font-size: 1.25rem; /* text-xl */
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.close-interview-button:hover {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white); /* Slightly lighter on hover */
+}
+
+.interview-content-area {
+    padding: 2rem;
+    flex-grow: 1; /* Allow content area to take available space */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-bg); /* Dark background for content area */
+}
+
+.question-box {
+    background-color: color-mix(in srgb, var(--primary-color) 8%, var(--dark-bg) 92%); /* Lighter tint of primary for question box */
+    border: 2px solid var(--border-color); /* Use border color */
+    border-radius: 1rem; /* rounded-2xl */
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative; /* For absolute positioning of speak button */
+}
+
+.question-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.question-number-tag {
+    background-color: var(--primary-color); /* Primary color */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.question-difficulty-tag {
+    background-color: var(--success-color); /* Success color */
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.question-text {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600;
+    color: var(--text-primary); /* Primary text color */
+    margin-bottom: 0.75rem;
+    line-height: 1.625; /* leading-relaxed */
+}
+
+.question-category {
+    color: var(--text-secondary); /* Secondary text color */
+}
+
+.speak-question-button {
+    position: absolute;
+    top: 1.5rem; /* Adjust as needed */
+    right: 1.5rem; /* Adjust as needed */
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--glass-fill);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.speak-question-button:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--glass-fill) 80%, white);
+}
+
+.speak-question-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+.answer-section {
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Allow answer section to take available space */
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-section label {
+    display: block;
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600;
+    color: var(--text-primary); /* Primary text color */
+    margin-bottom: 0.75rem;
+}
+
+.answer-textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border-color); /* Border color */
+    border-radius: 0.75rem; /* rounded-xl */
+    font-size: 1rem;
+    resize: vertical; /* Allow vertical resizing, not horizontal */
+    transition: all 0.3s ease;
+    background-color: var(--card-bg); /* Use card background for textarea */
+    color: var(--text-primary); /* Primary text color */
+    flex-grow: 1; /* Allow textarea to grow and fill available space */
+    min-height: 5rem; /* Ensure a minimum height for the textarea */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.answer-textarea::placeholder {
+    color: var(--text-muted); /* Muted text color */
+}
+
+.answer-textarea:focus {
+    border-color: var(--primary-color); /* Focus border color */
+    outline: none;
+}
+
+.voice-answer-button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--gradient-3); /* Energetic blue gradient */
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.voice-answer-button:hover:not(:disabled) {
+    background: var(--gradient-4); /* Change gradient on hover */
+}
+
+.voice-answer-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.voice-answer-button.listening {
+    background: var(--danger-color); /* Red when listening */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 83, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0); }
+}
+
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto; /* Push buttons to the bottom */
+}
+
+.nav-button {
+    padding: 0.75rem 2rem; /* px-8 py-3 */
+    border-radius: 0.75rem; /* rounded-xl */
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none; /* Ensure no default border */
+}
+
+.nav-button.prev {
+    background-color: var(--border-color); /* Border color for previous button */
+    color: var(--text-primary); /* Primary text color */
+}
+
+.nav-button.prev:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--border-color) 80%, var(--primary-color)); /* Subtle hover effect */
+}
+
+.nav-button.prev:disabled {
+    background-color: color-mix(in srgb, var(--border-color) 50%, transparent); /* Lighter disabled background */
+    color: var(--text-muted); /* Muted text color for disabled */
+    cursor: not-allowed;
+}
+
+.nav-button.next {
+    background: var(--gradient-1); /* Use primary gradient */
+    color: white;
+}
+
+.nav-button.next:hover {
+    background: var(--gradient-2); /* Use accent gradient for hover */
+}
+
+/* General button styles for consistency */
+button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+    cursor: pointer;
+}
