@@ -1,0 +1,9 @@
+server/venv/
+server/instance/
+server/__pycache__/
+server/node_modules/
+client/flash-client/node_modules/
+client/flash-client/dist/
+.DS_Store
+*.pyc
+*.db

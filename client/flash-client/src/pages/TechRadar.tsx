@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './TechRadar.css'; // The CSS file remains the same
 
-// --- NEW: Configuration for News API ---
-const NEWS_API_KEY = '5df57fc852c44866b24b01f2b5a725ad';
-// We'll search for broad technology terms. `sortBy=publishedAt` ensures we get the latest.
-const NEWS_API_URL = `https://newsapi.org/v2/everything?q=technology OR programming OR developer OR startup OR cybersecurity&sortBy=publishedAt&language=en&apiKey=${NEWS_API_KEY}`;
+// --- REPLACED: News API is now handled by the backend proxy ---
+// URL is dynamically constructed in fetchNews
+
 
 // --- UPDATED: NewsArticle Interface ---
 // Removed `aiInsight` as it's no longer generated.
@@ -21,49 +20,49 @@ interface NewsArticle {
 
 // --- Helper function to format date from ISO string to a user-friendly format ---
 const formatDate = (isoDate: string): string => {
-    const date = new Date(isoDate);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
+  const date = new Date(isoDate);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
 
-    if (date.toDateString() === today.toDateString()) {
-        return 'Today';
-    }
-    if (date.toDateString() === yesterday.toDateString()) {
-        return 'Yesterday';
-    }
-    // Check if it was within the last 7 days
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    if (date > oneWeekAgo) {
-        return 'This Week';
-    }
-    // Fallback for older dates
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (date.toDateString() === today.toDateString()) {
+    return 'Today';
+  }
+  if (date.toDateString() === yesterday.toDateString()) {
+    return 'Yesterday';
+  }
+  // Check if it was within the last 7 days
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  if (date > oneWeekAgo) {
+    return 'This Week';
+  }
+  // Fallback for older dates
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 
 // --- Helper function to categorize news based on keywords ---
 const getCategoryAndTags = (title: string, description: string): { category: string, tags: string[] } => {
-    const content = (`${title} ${description}`).toLowerCase();
-    
-    if (/\b(ai|artificial intelligence|machine learning|llm|openai|gemini)\b/.test(content)) {
-        return { category: 'AI & ML', tags: ['AI', 'ML'] };
-    }
-    if (/\b(react|angular|vue|javascript|typescript|web dev|app dev|node.js)\b/.test(content)) {
-        return { category: 'Web & App Dev', tags: ['WebDev', 'AppDev'] };
-    }
-    // --- FIXED: Escaped the forward slash in "ci/cd" ---
-    if (/\b(devops|docker|kubernetes|ci\/cd|automation|terraform)\b/.test(content)) {
-        return { category: 'DevOps & Tools', tags: ['DevOps', 'Tools'] };
-    }
-    if (/\b(cybersecurity|breach|malware|phishing|ransomware|security)\b/.test(content)) {
-        return { category: 'Cybersecurity', tags: ['Security', 'Cyber'] };
-    }
-    if (/\b(startup|funding|venture|acquisition|ipo)\b/.test(content)) {
-        return { category: 'Startups & Industry', tags: ['Startups', 'Business'] };
-    }
+  const content = (`${title} ${description}`).toLowerCase();
 
-    return { category: 'Startups & Industry', tags: ['Tech', 'News'] }; // Default category
+  if (/\b(ai|artificial intelligence|machine learning|llm|openai|gemini)\b/.test(content)) {
+    return { category: 'AI & ML', tags: ['AI', 'ML'] };
+  }
+  if (/\b(react|angular|vue|javascript|typescript|web dev|app dev|node.js)\b/.test(content)) {
+    return { category: 'Web & App Dev', tags: ['WebDev', 'AppDev'] };
+  }
+  // --- FIXED: Escaped the forward slash in "ci/cd" ---
+  if (/\b(devops|docker|kubernetes|ci\/cd|automation|terraform)\b/.test(content)) {
+    return { category: 'DevOps & Tools', tags: ['DevOps', 'Tools'] };
+  }
+  if (/\b(cybersecurity|breach|malware|phishing|ransomware|security)\b/.test(content)) {
+    return { category: 'Cybersecurity', tags: ['Security', 'Cyber'] };
+  }
+  if (/\b(startup|funding|venture|acquisition|ipo)\b/.test(content)) {
+    return { category: 'Startups & Industry', tags: ['Startups', 'Business'] };
+  }
+
+  return { category: 'Startups & Industry', tags: ['Tech', 'News'] }; // Default category
 };
 
 
@@ -83,20 +82,27 @@ export default function TechRadar() {
     { id: 'Cybersecurity', name: 'Cybersecurity', icon: '🔒' }
   ];
 
-  // --- REWRITTEN: Function to fetch news from the News API ---
+  // --- REWRITTEN: Function to fetch news from the Backend Proxy ---
   const fetchNews = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(NEWS_API_URL);
+      // Use the backend proxy instead of calling NewsAPI directly
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/api/news`);
+
       if (!response.ok) {
-        // News API provides error messages in the response body
         const errorData = await response.json();
-        throw new Error(errorData.message || `Error: ${response.status}`);
+        throw new Error(errorData.error || `Error: ${response.status}`);
       }
-      
+
       const data = await response.json();
+
+      // Check if articles exist
+      if (!data.articles) {
+        setNewsData([]);
+        return;
+      }
 
       // Filter out articles that don't have essential content
       const validArticles = data.articles.filter(
@@ -121,7 +127,7 @@ export default function TechRadar() {
       setNewsData(formattedNews);
 
     } catch (err: any) {
-      console.error("Error fetching news from News API:", err);
+      console.error("Error fetching news from Backend:", err);
       const errorMessage = err instanceof Error ? err.message : String(err);
       setError(`Failed to load news. ${errorMessage}`);
       setNewsData([]);
@@ -162,9 +168,9 @@ export default function TechRadar() {
               Stay ahead with the latest updates from the tech world
             </p>
           </div>
-          <button 
-            className="sync-button" 
-            onClick={refreshNews} 
+          <button
+            className="sync-button"
+            onClick={refreshNews}
             disabled={isLoading}
             aria-label={isLoading ? 'Syncing news...' : 'Sync now to refresh news'}
           >
@@ -215,9 +221,9 @@ export default function TechRadar() {
             ))
           ) : filteredNews.length > 0 ? (
             filteredNews.map(news => (
-              <article 
+              <article
                 key={news.id}
-                className="news-card" 
+                className="news-card"
                 onClick={() => window.open(news.url, '_blank', 'noopener,noreferrer')}
                 style={{ cursor: 'pointer' }}
               >
@@ -228,7 +234,7 @@ export default function TechRadar() {
                   </div>
                   <button
                     className={`save-button ${savedNews.includes(news.id) ? 'saved' : ''}`}
-                    onClick={(e) => { e.stopPropagation(); toggleSaved(news.id); }} 
+                    onClick={(e) => { e.stopPropagation(); toggleSaved(news.id); }}
                     aria-label={savedNews.includes(news.id) ? 'Unsave this article' : 'Save this article'}
                   >
                     {savedNews.includes(news.id) ? '★' : '☆'}

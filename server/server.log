@@ -1,0 +1,1642 @@
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+WARNING:__init__:🚨 WARNING: Gemini API key is not set in environment variables. Gemini AI functionality will be limited.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+ * Serving Flask app '__init__'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:30:27] "GET /health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:26] "GET /health HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:35] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:35] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:35] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:35] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:41] "OPTIONS /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:41] "GET /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:43] "OPTIONS /api/ai/suggestion HTTP/1.1" 200 -
+INFO:__init__:AI: Generating simple AI suggestion for skill: AWS Cloud Practitioner
+INFO:__init__:AI: Simple suggestion generated: Conquer the AWS Cloud Practitioner exam by mastering the core value proposition of services and clearly understanding the Shared Responsibility Model. Keep flying high and focusing on the fundamentals!
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:47] "POST /api/ai/suggestion HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:47] "[33mOPTIONS /api/learning_steps/f858ec43-02d9-493c-a398-1079ece0ad94 HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:53] "OPTIONS /api/ai/suggestion HTTP/1.1" 200 -
+INFO:__init__:AI: Generating simple AI suggestion for skill: AWS Cloud Practitioner
+INFO:__init__:AI: Simple suggestion generated: Focus on mastering the core concepts like the Shared Responsibility Model and the six pillars of the Well-Architected Framework. This foundational understanding is key to unlocking your entire cloud journey, and I know you can grasp it quickly!
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:56] "POST /api/ai/suggestion HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:31:56] "[33mOPTIONS /api/learning_steps/395bb490-8608-480e-a4cb-c0c816584599 HTTP/1.1[0m" 404 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:32:26] "GET /health HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.748078628s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:33:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.751459687s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:34:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.748144717s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:27] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:27] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:27] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:32] "OPTIONS /api/skills/9412a57f-6fa6-4934-8916-05f148137217/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:32] "GET /api/skills/9412a57f-6fa6-4934-8916-05f148137217/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:51] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:51] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:35:51] "GET /api/skills HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.7474128s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:36:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.737317228s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:37:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.740437171s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:38:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.735708474s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:39:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.728032683s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:40:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.727209109s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:41:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:41:52] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:41:52] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:41:52] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:41:52] "GET /api/skills HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.722656863s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:42:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:18] "OPTIONS /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:18] "GET /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:20] "OPTIONS /flash HTTP/1.1" 200 -
+INFO:__init__:User chat message received for session default_session. Message: 'I'm learning "AWS Cloud Practitioner" and I'm currently on the step "C...'
+INFO:__init__:Creating new chat session for default_session from DB history.
+INFO:__init__:User message saved to DB for session default_session.
+ERROR:__init__:Gemini API Quota Exceeded for session default_session: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 39.023133343s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 39
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:21] "[31m[1mPOST /flash HTTP/1.1[0m" 429 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.932574758s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:30] "OPTIONS /flash HTTP/1.1" 200 -
+INFO:__init__:User chat message received for session default_session. Message: 'I'm learning "AWS Cloud Practitioner" and I'm currently on the step "P...'
+INFO:__init__:User message saved to DB for session default_session.
+ERROR:__init__:Gemini API Quota Exceeded for session default_session: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 28.914212309s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 28
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:31] "[31m[1mPOST /flash HTTP/1.1[0m" 429 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/notes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/weekly_tasks HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/notes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/weekly_tasks HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/notes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/weekly_tasks HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/notes HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/user/profile HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/weekly_tasks HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/user/profile HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/user/profile HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "OPTIONS /api/motivation HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/motivation HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:41] "GET /api/motivation HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:46] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:46] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:46] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:46] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:51] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 969, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 8.311962661s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 8
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:43:51] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.933585854s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:44:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.725698905s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:45:27] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.739270137s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:46:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:46:49] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:46:49] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:46:49] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:46:49] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:02] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Operating Systems. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 56.801561644s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 56
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:03] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:__init__:AI: Generating hr interview questions with prompts: hr interview questions suitable for a professional interview.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 54.102103493s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 54
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:06] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:12] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Data Structures & Algorithms. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 47.332979356s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 47
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:12] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.936534171s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:47:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.750830929s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:48:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.733289488s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:49:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.742585238s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:53] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:53] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:53] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:53] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:56] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:50:56] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.758055544s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:51:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.746442179s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:52] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:52] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:52] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:52] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:55] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Data Structures & Algorithms. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 4.284763369s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 4
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:56] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Computer Networks. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 3.504502214s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 3
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:56] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:__init__:AI: Generating hr interview questions with prompts: hr interview questions suitable for a professional interview.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 2.022974055s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 2
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:58] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:__init__:AI: Generating aptitude interview questions with prompts: aptitude interview questions suitable for a professional interview.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 1.12905779s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 1
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:52:59] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:02] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:02] "OPTIONS /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:02] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:02] "GET /api/skills HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:05] "OPTIONS /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:05] "GET /api/skills/6eea0b12-96f6-4f34-a01c-896126c660ea/learning_steps HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:08] "OPTIONS /flash HTTP/1.1" 200 -
+INFO:__init__:User chat message received for session default_session. Message: 'I'm learning "AWS Cloud Practitioner" and I'm currently on the step "A...'
+INFO:__init__:Creating new chat session for default_session from DB history.
+INFO:__init__:User message saved to DB for session default_session.
+ERROR:__init__:Gemini API Quota Exceeded for session default_session: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 50.89707699s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 50
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:09] "[31m[1mPOST /flash HTTP/1.1[0m" 429 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:16] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:16] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:16] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:16] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:18] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Artificial Intelligence. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 41.294217267s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 41
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:18] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.950312142s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:__init__:AI: Generating hr interview questions with prompts: hr interview questions suitable for a professional interview.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 1.325576098s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 1
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:53:58] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:54:25] "OPTIONS /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:54:25] "GET /api/learning_sessions?user_id=1 HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.947760111s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:54:27] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.745382697s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:55:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.719298975s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:56:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:56:52] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Operating Systems. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 7.654364721s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 7
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:56:52] "[35m[1mPOST /api/ai/generate_interview_questions HTTP/1.1[0m" 500 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.750863452s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:57:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.656581899s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:58:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:58:49] "OPTIONS /api/ai/generate_interview_questions HTTP/1.1" 200 -
+INFO:__init__:AI: Generating technical interview questions with prompts: technical computer science interview questions focused on Artificial Intelligence. The questions should test core concepts, problem-solving, and database knowledge.
+ERROR:__init__:AI: Error generating interview questions. Falling back to mock data.
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 982, in ai_generate_interview_questions
+    response = flash_model.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+               ^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+           ^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/retry/retry_unary.py", line 147, in retry_target
+    result = target()
+             ^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lenovo/flash-mentor/server/venv/lib/python3.12/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 9.92881607s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 9
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:58:50] "POST /api/ai/generate_interview_questions HTTP/1.1" 200 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.744180926s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [24/Jan/2026 23:59:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+ERROR:__init__:Gemini API connectivity test failed during health check: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 33.733880579s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 33
+}
+]
+INFO:werkzeug:127.0.0.1 - - [25/Jan/2026 00:00:26] "[35m[1mGET /health HTTP/1.1[0m" 503 -
+INFO:werkzeug:127.0.0.1 - - [25/Jan/2026 00:00:29] "OPTIONS /api/ai/generate_interview_feedback HTTP/1.1" 200 -
+INFO:__init__:AI: Generating interview feedback...
+ERROR:__init__:AI: Error generating AI feedback: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash
+Please retry in 30.631131425s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.5-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+  quota_value: 20
+}
+, retry_delay {
+  seconds: 30
+}
+]
+INFO:werkzeug:127.0.0.1 - - [25/Jan/2026 00:00:29] "[35m[1mPOST /api/ai/generate_interview_feedback HTTP/1.1[0m" 500 -
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+/home/lenovo/flash-mentor/server/__init__.py:2: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:__init__:✅ Gemini API configured successfully.
+INFO:__init__:💾 Database tables checked/created at: /home/lenovo/flash-mentor/flash_mentor.db
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 418-968-032
+INFO:werkzeug: * Detected change in '/home/lenovo/flash-mentor/server/__init__.py', reloading
+INFO:werkzeug: * Restarting with stat
+Traceback (most recent call last):
+  File "/home/lenovo/flash-mentor/server/run.py", line 1, in <module>
+    from __init__ import create_app
+  File "/home/lenovo/flash-mentor/server/__init__.py", line 815
+    try:
+    ^
+IndentationError: expected an indented block after 'try' statement on line 814

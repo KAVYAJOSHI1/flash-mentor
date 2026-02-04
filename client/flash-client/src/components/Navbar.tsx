@@ -39,7 +39,9 @@ export default function Navbar() {
     { to: "/roadmap", label: "Roadmap Mentor", icon: "🗺️" },
     { to: "/skills", label: "Skill Center", icon: "🎯" },
     { to: "/communication", label: "Communication Coach", icon: "💬" },
-    { to: "/tech", label: "Tech Radar", icon: "📡" }
+    { to: "/tech", label: "Tech Radar", icon: "📡" },
+    { to: "/optimize", label: "Code Optimizer", icon: "⚡" },
+    { to: "/resume", label: "CV Scanner", icon: "📄" }
   ];
 
   const handleNavClick = (to: string) => {
@@ -76,7 +78,7 @@ export default function Navbar() {
     },
     container: {
       position: 'relative',
-      maxWidth: '1280px', // Slightly wider container
+      maxWidth: '100%', // Full width
       margin: '0 auto',
       padding: '18px 30px', // More padding
       display: 'flex',
@@ -115,27 +117,30 @@ export default function Navbar() {
     navLinks: {
       display: 'flex',
       alignItems: 'center',
-      gap: '12px', // Increased gap between buttons
-      flexWrap: 'wrap', // Allow wrapping on smaller screens
-      justifyContent: 'flex-end', // Align items to the right when wrapped
+      gap: '4px', // Reduced gap significantly
+      flexWrap: 'nowrap', // Try to keep on one line if possible
+      justifyContent: 'flex-end',
+      maxWidth: '100%',
+      overflowX: 'auto', // Allow scrolling if it really overflows
+      paddingBottom: '4px' // Space for scrollbar if needed
     },
     navButton: {
       position: 'relative',
-      padding: '12px 24px', // More padding
-      borderRadius: '16px', // More rounded
+      padding: '8px 14px', // Reduced padding
+      borderRadius: '12px',
       border: 'none',
       background: 'transparent',
       color: 'rgba(255, 255, 255, 0.85)',
       cursor: 'pointer',
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', // More sophisticated transition
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
-      fontSize: '17px', // Slightly larger font
+      gap: '6px', // Reduced gap between icon and text
+      fontSize: '14px', // Reduced font size
       fontWeight: '600',
-      overflow: 'hidden',
+      whiteSpace: 'nowrap', // Prevent text wrapping
       textDecoration: 'none',
-      boxShadow: 'inset 0 0 0 0 transparent', // Initial state for inner shadow
+      boxShadow: 'inset 0 0 0 0 transparent',
     },
     navButtonHover: {
       background: 'rgba(255, 255, 255, 0.18)', // More opaque on hover

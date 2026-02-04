@@ -4,77 +4,77 @@ import './RoadmapMentor.css';
 
 // Custom SVG Icons (no dependencies)
 const Icons = {
-  BookOpen: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <path d="M2 3h6a4 4 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+  BookOpen: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <path d="M2 3h6a4 4 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
     </svg>
   ),
-  Code: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <polyline points="16,18 22,12 16,6"/>
-      <polyline points="8,6 2,12 8,18"/>
+  Code: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <polyline points="16,18 22,12 16,6" />
+      <polyline points="8,6 2,12 8,18" />
     </svg>
   ),
-  Brain: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" width="24" height="24">
-      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
-      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+  Brain: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" width="24" height="24">
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
     </svg>
   ),
-  Target: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="10"/>
-      <circle cx="12" cy="12" r="6"/>
-      <circle cx="12" cy="12" r="2"/>
+  Target: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
     </svg>
   ),
-  MessageCircle: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  MessageCircle: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
     </svg>
   ),
-  Trophy: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-      <path d="M4 22h16"/>
-      <path d="M10 14.66V17c0 .55.47.98.97 1.21C11.25 18.4 11.61 18.5 12 18.5s.75-.1 1.03-.29c.5-.23.97-.66.97-1.21v-2.34"/>
-      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+  Trophy: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55.47.98.97 1.21C11.25 18.4 11.61 18.5 12 18.5s.75-.1 1.03-.29c.5-.23.97-.66.97-1.21v-2.34" />
+      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
     </svg>
   ),
-  CheckCircle: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-      <polyline points="22,4 12,14.01 9,11.01"/>
+  CheckCircle: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+      <polyline points="22,4 12,14.01 9,11.01" />
     </svg>
   ),
-  Clock: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12,6 12,12 16,14"/>
+  Clock: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12,6 12,12 16,14" />
     </svg>
   ),
-  Circle: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <circle cx="12" cy="12" r="10"/>
+  Circle: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
     </svg>
   ),
-  Play: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <polygon points="5,3 19,12 5,21"/>
+  Play: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <polygon points="5,3 19,12 5,21" />
     </svg>
   ),
-  Pause: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <rect x="6" y="4" width="4" height="16"/>
-      <rect x="14" y="4" width="4" height="16"/>
+  Pause: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <rect x="6" y="4" width="4" height="16" />
+      <rect x="14" y="4" width="4" height="16" />
     </svg>
   ),
-  RotateCcw: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
-      <polyline points="1,4 1,10 7,10"/>
-      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+  RotateCcw: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg {...props} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2">
+      <polyline points="1,4 1,10 7,10" />
+      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
     </svg>
   )
 };
@@ -84,7 +84,7 @@ const ROADMAP_DATA = {
     icon: Icons.BookOpen,
     subjects: [
       "Data Structures & Algorithms",
-      "Operating Systems", 
+      "Operating Systems",
       "Computer Networks",
       "DBMS",
       "Compiler Design",
@@ -103,7 +103,7 @@ const ROADMAP_DATA = {
     icon: Icons.Code,
     subjects: [
       "Arrays & Strings & Recursion",
-      "Hashing & Two Pointers", 
+      "Hashing & Two Pointers",
       "Linked List & Stack & Queue",
       "Trees & Tries",
       "Graphs & BFS/DFS",
@@ -122,7 +122,7 @@ const ROADMAP_DATA = {
       "Python & Libraries (Numpy, Pandas)",
       "Statistics & Linear Algebra",
       "Scikit-learn Basics",
-      "Deep Learning Foundations", 
+      "Deep Learning Foundations",
       "CNNs & Computer Vision",
       "RNNs & NLP",
       "Transformers & Advanced NLP",
@@ -161,7 +161,7 @@ const ROADMAP_DATA = {
       "Resume & LinkedIn"
     ],
     timeline: "Ongoing - 2hrs weekly",
-    priority: "Medium", 
+    priority: "Medium",
     weeklyHours: 2,
     strategy: "Daily practice + Mock interviews"
   },
@@ -190,7 +190,7 @@ const MILESTONES = [
     status: "upcoming"
   },
   {
-    date: "May 2026", 
+    date: "May 2026",
     title: "Skill Mastery",
     description: "DSA + 1 major AI project complete",
     status: "upcoming"
@@ -203,7 +203,7 @@ const MILESTONES = [
   },
   {
     date: "Dec 2026",
-    title: "Industry Ready", 
+    title: "Industry Ready",
     description: "Resume + System design + Major project",
     status: "upcoming"
   },
@@ -306,9 +306,9 @@ export default function RoadmapMentor() {
   };
 
   const toggleGoal = (goalId: number) => {
-    setTodayGoals(prev => 
-      prev.map(goal => 
-        goal.id === goalId 
+    setTodayGoals(prev =>
+      prev.map(goal =>
+        goal.id === goalId
           ? { ...goal, completed: !goal.completed }
           : goal
       )
@@ -336,11 +336,10 @@ export default function RoadmapMentor() {
     setSelectedTrack(prevTrack => (prevTrack === trackName ? null : trackName));
   };
 
-  // Function to handle clicking on a subject within an expanded track (to navigate)
+  // Modified: Function to handle clicking on a subject within an expanded track (to navigate)
   const handleSubjectClick = (subjectName: string) => {
-    // Ensure categoryName is URL-friendly (e.g., replace spaces with hyphens)
-    const categoryParam = subjectName.replace(/\s+/g, '-').toLowerCase();
-    navigate(`/skills?category=${categoryParam}`); // Navigate to SkillCenter with category query param
+    // Navigate to SkillCenter, passing the subjectName in the state object
+    navigate('/skills', { state: { subjectNameForSkill: subjectName } });
   };
 
   return (
@@ -387,14 +386,14 @@ export default function RoadmapMentor() {
           <div className="timer-display">
             <h3>⏱️ Study Timer: {formatTime(studyTimer)}</h3>
             <div className="timer-controls">
-              <button 
+              <button
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
                 className={`timer-btn ${isTimerRunning ? 'pause' : 'play'}`}
               >
                 {isTimerRunning ? <Icons.Pause /> : <Icons.Play />}
                 {isTimerRunning ? 'Pause' : 'Start'}
               </button>
-              <button 
+              <button
                 onClick={() => {
                   setStudyTimer(0);
                   setIsTimerRunning(false);
@@ -411,15 +410,15 @@ export default function RoadmapMentor() {
         <div className="today-goals">
           <h3>📋 Today's Goals ({completedGoals}/{todayGoals.length})</h3>
           <div className="goals-progress-bar">
-            <div 
+            <div
               className="goals-progress-fill"
               style={{ width: `${(completedGoals / todayGoals.length) * 100}%` }}
             ></div>
           </div>
           <div className="goals-list">
             {todayGoals.map(goal => (
-              <div 
-                key={goal.id} 
+              <div
+                key={goal.id}
                 className={`goal-item ${goal.completed ? 'completed' : ''}`}
                 onClick={() => toggleGoal(goal.id)}
               >
@@ -440,9 +439,9 @@ export default function RoadmapMentor() {
           {Object.entries(ROADMAP_DATA).map(([trackName, trackData]) => {
             const IconComponent = trackData.icon;
             const trackProgress = progress[trackName] || 0;
-            
+
             return (
-              <div 
+              <div
                 key={trackName}
                 className={`track-card ${selectedTrack === trackName ? 'selected' : ''}`} // Re-added selected state
                 onClick={() => handleTrackCardClick(trackName)} // Click to expand/collapse
@@ -460,14 +459,14 @@ export default function RoadmapMentor() {
                     {getPriorityBadge(trackData.priority)}
                   </div>
                 </div>
-                
+
                 <div className="progress-bar">
-                  <div 
-                    className="progress-fill" 
+                  <div
+                    className="progress-fill"
                     style={{ width: `${trackProgress}%` }}
-                  ></div>
-                </div>
-                
+                  ></div
+                  >                </div>
+
                 <div className="track-stats">
                   <span className="progress-text">{trackProgress}% Complete</span>
                   <span className="hours-text">{trackData.weeklyHours}h/week</span>
@@ -481,8 +480,8 @@ export default function RoadmapMentor() {
                     <div className="subjects-list">
                       <strong>📚 Subjects:</strong>
                       {trackData.subjects.map((subject, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className="subject-item"
                           onClick={(e) => { // Click on subject item to navigate
                             e.stopPropagation(); // Prevent card from collapsing
@@ -491,11 +490,11 @@ export default function RoadmapMentor() {
                         >
                           <span className="subject-name">{subject}</span>
                           <div className="subject-progress">
-                            <div 
+                            <div
                               className="subject-fill"
                               // This is a simplified progress simulation, adjust as needed
-                              style={{ 
-                                width: `${Math.min(100, Math.max(0, trackProgress - (index * 12.5)))}%` 
+                              style={{
+                                width: `${Math.min(100, Math.max(0, trackProgress - (index * 12.5)))}%`
                               }}
                             ></div>
                           </div>
@@ -503,7 +502,7 @@ export default function RoadmapMentor() {
                       ))}
                     </div>
                     <div className="progress-controls">
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           updateProgress(trackName, trackProgress - 5);
@@ -512,7 +511,7 @@ export default function RoadmapMentor() {
                       >
                         -5%
                       </button>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           updateProgress(trackName, trackProgress + 5);
@@ -558,7 +557,7 @@ export default function RoadmapMentor() {
                 <div className="schedule-track">{track}</div>
                 <div className="schedule-hours">{data.weeklyHours}h</div>
                 <div className="schedule-bar">
-                  <div 
+                  <div
                     className="schedule-fill"
                     style={{ width: `${(data.weeklyHours / 12) * 100}%` }}
                   ></div>

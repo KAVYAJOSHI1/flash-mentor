@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+@import url('[https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap)');
 
 /* --- Global Variables for Theming (Ensure consistency with other CSS files) --- */
 /* These should ideally be in a single, globally imported CSS file for maintainability.
@@ -87,6 +87,12 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.greeting-section h1 svg {
+    width: 45px;
+    height: 45px;
+    color: var(--accent-color); /* Original color was accent-light, now accent */
 }
 
 .greeting-section .hero-subtitle {
@@ -242,6 +248,9 @@ body {
 
 .ongoing-content {
   flex-grow: 1; /* Make content fill available space */
+  max-height: 250px; /* ADDED: Fixed height for scrollability */
+  overflow-y: auto; /* ADDED: Enable vertical scrolling */
+  padding-right: 10px; /* ADDED: Space for scrollbar */
 }
 
 .activity-item {
@@ -259,10 +268,6 @@ body {
 
 .activity-item:last-child {
   margin-bottom: 0;
-}
-
-.activity-info {
-  flex-grow: 1;
 }
 
 .activity-info strong {
@@ -359,6 +364,9 @@ body {
 
 .upcoming-milestones {
   margin-bottom: 25px;
+  max-height: 150px; /* ADDED: Fixed height for scrollability */
+  overflow-y: auto; /* ADDED: Enable vertical scrolling */
+  padding-right: 10px; /* ADDED: Space for scrollbar */
 }
 
 .upcoming-milestones h4 {
@@ -454,6 +462,9 @@ body {
 
 .recommendations-content {
   flex-grow: 1;
+  max-height: 250px; /* ADDED: Fixed height for scrollability */
+  overflow-y: auto; /* ADDED: Enable vertical scrolling */
+  padding-right: 10px; /* ADDED: Space for scrollbar */
 }
 
 .recommendation-item {
@@ -571,6 +582,195 @@ body {
     text-decoration: underline;
 }
 
+/* --- New Styles for Quick Capture Notes --- */
+.quick-notes-card {
+  /* Inherits base card styling */
+}
+
+.quick-notes-card textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--dark-bg-light-tint);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95em;
+  margin-bottom: 15px;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.quick-notes-card textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.quick-notes-card button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.quick-notes-card button:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+}
+
+.quick-notes-card button:disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.quick-notes-card .error-message {
+  color: var(--danger-color);
+  font-size: 0.85em;
+  margin-top: 10px;
+}
+
+.recent-notes-list {
+  margin-top: 20px;
+  border-top: 1px dashed var(--border-color);
+  padding-top: 20px;
+  max-height: 150px; /* ADDED: Fixed height for recent notes list */
+  overflow-y: auto; /* ADDED: Enable vertical scrolling */
+}
+
+.recent-notes-list h4 {
+  font-size: 1em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.recent-notes-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-notes-list .note-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.recent-notes-list .note-item p {
+  margin: 0 0 5px 0;
+  font-size: 0.9em;
+  color: var(--text-primary);
+}
+
+.recent-notes-list .note-item span {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* --- New Styles for Weekly Task Planner --- */
+.weekly-tasks-card {
+  /* Inherits base card styling */
+}
+
+.weekly-tasks-card .tasks-content { /* ADDED: This will wrap both list and button */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.weekly-tasks-card .tasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* ADDED: Fixed height for tasks list */
+  overflow-y: auto; /* ADDED: Enable vertical scrolling */
+  flex-grow: 1; /* Allow list to grow and fill space */
+  margin-bottom: 15px; /* Space between list and button */
+}
+
+.weekly-tasks-card .task-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.weekly-tasks-card .task-item:last-child {
+  border-bottom: none;
+}
+
+.weekly-tasks-card .task-item input[type="checkbox"] {
+  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent-color); /* Modern way to style checkbox color */
+  flex-shrink: 0;
+}
+
+.weekly-tasks-card .task-item label {
+  font-size: 1em;
+  color: var(--text-primary);
+  flex-grow: 1;
+  cursor: pointer;
+}
+
+.weekly-tasks-card .task-item.completed label {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.weekly-tasks-card .task-type {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.75em;
+  margin-left: 10px;
+  text-transform: capitalize;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.weekly-tasks-card .add-task-btn { /* ADDED: Style for the new button */
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto; /* Push button to the bottom if content is short */
+}
+
+.weekly-tasks-card .add-task-btn:hover {
+  background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+  transform: translateY(-2px);
+}
+
+.weekly-tasks-card .add-task-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+}
+
 /* --- Responsiveness --- */
 @media (max-width: 1024px) {
   .home-container {
@@ -625,7 +825,7 @@ body {
     gap: 10px;
   }
 
-  .continue-btn, .view-milestone-btn, .suggestion-action, .full-roadmap-btn {
+  .continue-btn, .view-milestone-btn, .suggestion-action, .full-roadmap-btn, .add-task-btn {
     width: 100%;
     justify-content: center;
     margin-top: 10px;
@@ -633,6 +833,14 @@ body {
 
   .full-roadmap-btn {
     max-width: none; /* Allow it to take full width of card */
+  }
+
+  /* Added responsive styles for new cards */
+  .quick-notes-card button,
+  .weekly-tasks-card .task-item input[type="checkbox"],
+  .weekly-tasks-card .task-item label,
+  .weekly-tasks-card .task-type {
+      /* Adjust as needed for tablet screens */
   }
 }
 
@@ -678,6 +886,29 @@ body {
     }
     .suggestion-text p {
         font-size: 0.9rem;
+    }
+
+    /* Added responsive styles for new cards */
+    .quick-notes-card textarea {
+        min-height: 80px;
+    }
+    .quick-notes-card button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    .recent-notes-list .note-item p {
+        font-size: 0.85em;
+    }
+    .weekly-tasks-card .task-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+    .weekly-tasks-card .task-item label {
+        font-size: 0.9em;
+    }
+    .weekly-tasks-card .task-type {
+        font-size: 0.7em;
+        padding: 3px 6px;
     }
 }
 
@@ -768,5 +999,29 @@ body {
   }
   .empty-state p {
       font-size: 0.85rem;
+  }
+
+  /* Added responsive styles for new cards */
+  .quick-notes-card textarea {
+      min-height: 60px;
+      font-size: 0.9em;
+  }
+  .quick-notes-card button {
+      font-size: 0.85em;
+      padding: 7px 12px;
+  }
+  .recent-notes-list .note-item p {
+      font-size: 0.8em;
+  }
+  .weekly-tasks-card .task-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+  }
+  .weekly-tasks-card .task-item label {
+      font-size: 0.85em;
+  }
+  .weekly-tasks-card .task-type {
+      font-size: 0.65em;
+      padding: 2px 5px;
   }
 }

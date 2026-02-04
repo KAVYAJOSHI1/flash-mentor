@@ -7,54 +7,115 @@ from flask_migrate import Migrate
 from datetime import datetime
 import logging
 import google.api_core.exceptions
-import uuid # For generating UUIDs for skill and learning step IDs
-import json # Import json module
-import re # NEW: Import regex module for stripping markdown
+import uuid 
+import json 
+import re 
+import random 
+from groq import Groq 
+from dotenv import load_dotenv # Import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv() 
+
+# Import blueprints
+from routes.news import news_bp
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize extensions outside of the factory, but without app binding initially
+# Initialize extensions
 db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    # Configure CORS to allow requests from any origin (for development)
     CORS(app, resources={r"/*": {"origins": "*"}})
 
-    # ===========================================================================
-    # Configuration for Flask and Database
-    # ===========================================================================
-    # Construct an absolute path for the SQLite database
+    app.register_blueprint(news_bp)
+
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     db_path = os.path.join(project_root, 'flash_mentor.db')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'a_default_secret_key_if_not_set_securely') # Added a secret key
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default_secret')
 
-    # Bind extensions to the app within the factory
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # ===========================================================================
-    # Configuration for Gemini API
-    # ===========================================================================
-    # --- IMPORTANT: Replace "YOUR_ACTUAL_GEMINI_API_KEY_GOES_HERE" with your key ---
-    GEMINI_API_KEY: str = "AIzaSyCB1pReRNIWwuZ-cWRgcnOhych-PFS2kdQ" # Your API key hardcoded
+    # --- AI Client Configuration ---
+    GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
     
-    if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_ACTUAL_GEMINI_API_KEY_GOES_HERE":
-        logger.warning("🚨 WARNING: Gemini API key is not set. Gemini AI functionality will be limited or unavailable. Please update GEMINI_API_KEY in server/__init__.py")
-    else:
+    groq_client = None
+    if GROQ_API_KEY:
+        try:
+            groq_client = Groq(api_key=GROQ_API_KEY)
+            logger.info("✅ Groq API configured successfully.")
+        except Exception as e:
+            logger.error(f"❌ Failed to configure Groq API: {e}")
+
+    if GEMINI_API_KEY:
         try:
             genai.configure(api_key=GEMINI_API_KEY)
             logger.info("✅ Gemini API configured successfully.")
         except Exception as e:
             logger.error(f"❌ Failed to configure Gemini API: {e}")
 
-    # Define a system instruction that differentiates behavior
-    # This system instruction will be applied *conditionally* or refined based on request type
+    # Helper function to generate content using available provider
+    def generate_ai_content(prompt, system_instruction=None, model_type="fast"):
+        """
+        Tries Groq first, then Gemini. Returns the text response.
+        """
+        # 1. Try Groq
+        if groq_client:
+            try:
+                # Select model based on type intent
+                # Updated to use currently supported models
+                model = "llama-3.3-70b-versatile" if model_type == "complex" else "llama-3.1-8b-instant"
+                
+                messages = []
+                if system_instruction:
+                    messages.append({"role": "system", "content": system_instruction})
+                messages.append({"role": "user", "content": prompt})
+
+                completion = groq_client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    temperature=0.7,
+                    max_tokens=1024,
+                )
+                return completion.choices[0].message.content
+            except Exception as e:
+                logger.error(f"Groq generation failed: {e}. Falling back to Gemini.")
+                logger.error (f"Debugging Groq: Key Present? {bool(groq_client.api_key)}")
+
+        # 2. Try Gemini
+        if GEMINI_API_KEY:
+            try:
+                model_name = "gemini-flash-latest" 
+                # Note: Gemini python lib system_instruction is set at model init, 
+                # but we can prepend it to prompt for single-use compatibility if needed, 
+                # or just use the global flash_model if no custom system instruction.
+                # For simplicity here, we'll create a lightweight model instance or prepend.
+                
+                final_prompt = prompt
+                if system_instruction:
+                    final_prompt = f"System Instruction: {system_instruction}\n\nUser Request: {prompt}"
+
+                model = genai.GenerativeModel(model_name=model_name)
+                response = model.generate_content(final_prompt, request_options={"timeout": 60})
+                return response.text
+            except Exception as e:
+                 logger.error(f"Gemini generation failed: {e}")
+                 raise e # Re-raise to trigger mock fallback in caller
+        
+        raise Exception("No AI providers available")
+
+    # Keep the global flash_model for legacy routes not yet updated, but prefer helper
+    # We will update the routes to use generate_ai_content
+
+    # Define a system instruction
     DEFAULT_SYSTEM_INSTRUCTION = """
     You are Flash, a highly intelligent and encouraging mentor. Provide concise, accurate, and actionable advice in a supportive tone. 
     Keep responses to a maximum of 3-4 sentences. Focus on problem-solving and positive reinforcement. 
@@ -62,32 +123,13 @@ def create_app():
     Avoid giving medical, legal, or financial advice. Ensure your responses are helpful and do not generate harmful or inappropriate content.
     For general chat queries, respond with direct text.
     """
-
-    # This system instruction is for the Tech Radar, which is a specific AI generation task
+    
     TECH_RADAR_SYSTEM_INSTRUCTION = """
     You are Flash, an AI specialized in generating tech news for a 'Tech Radar'.
     Your task is to provide a list of 5 recent and relevant tech news articles.
-    For each article, extract the following information:
-    - **headline**: A concise and engaging title of the news article.
-    - **source**: The origin of the news (e.g., TechCrunch, The Verge, official company blog).
-    - **category**: The main tech category it belongs to (e.g., AI, Cybersecurity, Quantum Computing, Space, Web Development, Hardware, Software, Biotech).
-    - **aiInsight**: A brief (1-2 sentence) insightful comment or analysis from your perspective on the article's importance or implication.
-    
-    Format your response strictly as a JSON array of objects. Each object should represent one news article.
-    Example JSON structure for a single article:
-    {
-        "headline": "Example Headline",
-        "source": "Example Source",
-        "category": "Example Category",
-        "aiInsight": "This is an example AI insight."
-    }
-    Ensure the JSON is valid and can be directly parsed. Do NOT include any conversational text outside the JSON.
+    Format your response strictly as a JSON array of objects.
     """
 
-    flash_model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        system_instruction=DEFAULT_SYSTEM_INSTRUCTION 
-    )
 
     # In-memory chat history for active sessions. Used for maintaining Gemini chat state for /flash endpoint.
     chat_sessions = {}
@@ -197,9 +239,9 @@ def create_app():
                 'level': self.level,
                 'progress': self.progress,
                 'lastUpdated': self.last_updated.isoformat(), # Corrected to camelCase
+                'weeklyHours': self.weekly_hours, # Corrected to camelCase
                 'timeline': self.timeline,
                 'priority': self.priority,
-                'weeklyHours': self.weekly_hours, # Corrected to camelCase
                 'strategy': self.strategy
             }
 
@@ -229,7 +271,44 @@ def create_app():
                 'aiExplanation': self.ai_explanation, # NEW FIELD: Frontend expects camelCase
                 'createdAt': self.created_at.isoformat()
             }
+            
+    # --- NEW MODELS START HERE ---
+    class Note(db.Model):
+        id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+        content = db.Column(db.Text, nullable=False)
+        timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
+        def __repr__(self):
+            return f"<Note {self.id}: {self.content[:30]}...>"
+
+        def to_dict(self):
+            return {
+                'id': self.id,
+                'content': self.content,
+                'timestamp': self.timestamp.isoformat()
+            }
+
+    class WeeklyTask(db.Model):
+        id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+        description = db.Column(db.Text, nullable=False)
+        completed = db.Column(db.Boolean, default=False)
+        skill_id = db.Column(db.String(36), db.ForeignKey('skill.id'), nullable=True) # Optional link to a skill
+        learning_step_id = db.Column(db.String(36), nullable=True) # Optional link to a specific learning step (not a foreign key here)
+        type = db.Column(db.String(50), nullable=True) # e.g., 'review', 'practice', 'study', 'project'
+
+        def __repr__(self):
+            return f"<WeeklyTask {self.id}: {self.description[:30]}... (Completed: {self.completed})>"
+
+        def to_dict(self):
+            return {
+                'id': self.id,
+                'description': self.description,
+                'completed': self.completed,
+                'skillId': self.skill_id, # Frontend expects camelCase
+                'learningStepId': self.learning_step_id, # Frontend expects camelCase
+                'type': self.type
+            }
+    # --- NEW MODELS END HERE ---
 
     # Create tables within the application context after app and db are initialized
     with app.app_context():
@@ -269,7 +348,7 @@ def create_app():
 
             try:
                 # Test basic connectivity with a dummy request
-                test_model = genai.GenerativeModel("gemini-1.5-flash")
+                test_model = genai.GenerativeModel("gemini-flash-latest")
                 # Using an empty string or a simple "ping" message, and blocking safety settings for health check
                 test_response = test_model.generate_content("ping", safety_settings={'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE'})
                 
@@ -308,171 +387,132 @@ def create_app():
             }), 500
 
     @app.route('/flash', methods=['POST'])
+    @app.route('/flash', methods=['POST'])
     def chat_with_flash():
         """
         Handles general conversational chat with Flash AI.
-        This endpoint saves user messages and AI responses to the ChatHistory table.
-        This is the ONLY endpoint that saves to ChatHistory.
+        Prioritizes Groq, falls back to Gemini, then Mock.
+        Saves chat history to DB.
         """
         session_id = request.headers.get('X-Session-ID', 'default_session')
         user_message = request.json.get('message')
 
         if not user_message or not isinstance(user_message, str) or user_message.strip() == "":
-            logger.warning(f"Received invalid or empty message for session {session_id}.")
             return jsonify({
                 "success": False,
-                "error": "Message is required and must be a non-empty string.",
-                "code": "INVALID_MESSAGE_TYPE"
+                "error": "Message is required and must be a non-empty string."
             }), 400
 
-        MAX_MESSAGE_LENGTH = 4000
         trimmed_message = user_message.strip()
-        if len(trimmed_message) > MAX_MESSAGE_LENGTH:
-            logger.warning(f"Message too long for session {session_id}. Length: {len(trimmed_message)}")
-            return jsonify({
-                "success": False,
-                "error": f"Message too long. Maximum {MAX_MESSAGE_LENGTH} characters allowed.",
-                "code": "MESSAGE_TOO_LONG",
-                "maxLength": MAX_MESSAGE_LENGTH,
-                "currentLength": len(trimmed_message)
-            }), 400
+        logger.info(f"Chat: Received message for session {session_id}: {trimmed_message[:50]}...")
 
-        logger.info(f"User chat message received for session {session_id}. Message: '{trimmed_message[:70]}{'...' if len(trimmed_message) > 70 else ''}'")
-
-        # Load/continue chat history from DB for conversational context
-        if session_id not in chat_sessions:
-            logger.info(f"Creating new chat session for {session_id} from DB history.")
-            history_records = ChatHistory.query.filter_by(session_id=session_id).order_by(ChatHistory.timestamp).all()
-            history = []
-            for record in history_records:
-                role_for_gemini = 'model' if record.role == 'assistant' or record.role == 'flash' else record.role
-                history.append({'role': role_for_gemini, 'parts': [{'text': record.content}]})
-            
-            chat_sessions[session_id] = flash_model.start_chat(history=history)
-        
-        chat_session = chat_sessions[session_id]
-
+        # 1. Save User Message
         try:
-            # Save user message to DB (only for conversational chat)
             new_user_entry = ChatHistory(session_id=session_id, role='user', content=trimmed_message)
             db.session.add(new_user_entry)
             db.session.commit()
-            logger.info(f"User message saved to DB for session {session_id}.")
+        except Exception as e:
+            logger.error(f"Chat: Failed to save user message: {e}")
+            db.session.rollback()
+            return jsonify({"success": False, "error": "Database error saving message."}), 500
 
-            # Send message to Gemini
-            response = chat_session.send_message(trimmed_message)
-            flash_response = response.text
-            logger.info(f"Flash response received for session {session_id}. Length: {len(flash_response)}.")
+        # 2. Build Context (History)
+        history_records = ChatHistory.query.filter_by(session_id=session_id).order_by(ChatHistory.timestamp).all()
+        
+        # Prepare messages for Groq/OpenAI format
+        groq_messages = [
+            {"role": "system", "content": DEFAULT_SYSTEM_INSTRUCTION}
+        ]
+        
+        # Prepare text for Gemini/Legacy format
+        full_conversation_text = f"System: {DEFAULT_SYSTEM_INSTRUCTION}\n"
 
-            # Save model response to DB (only for conversational chat)
-            new_model_entry = ChatHistory(session_id=session_id, role='model', content=flash_response)
+        for record in history_records:
+            # Skip the message we just added to avoid duplications if not careful, 
+            # but usually we want all history. The last one is the current user message.
+            role = "user" if record.role == "user" else "assistant"
+            groq_messages.append({"role": role, "content": record.content})
+            full_conversation_text += f"{'User' if role == 'user' else 'Flash'}: {record.content}\n"
+
+        flash_response = ""
+        provider_used = "none"
+
+        # 3. Generate Response (Groq -> Gemini -> Mock)
+        try:
+            # A. Try Groq
+            if groq_client:
+                try:
+                    completion = groq_client.chat.completions.create(
+                        model="llama-3.3-70b-versatile",
+                        messages=groq_messages,
+                        temperature=0.7,
+                        max_tokens=1000,
+                    )
+                    flash_response = completion.choices[0].message.content
+                    provider_used = "groq"
+                except Exception as e:
+                    logger.error(f"Chat: Groq failed: {e}")
+
+            # B. Try Gemini (if Groq failed or not configured)
+            if not flash_response and GEMINI_API_KEY:
+                try:
+                    # Use simple generation with full context if chat session fails
+                    model = genai.GenerativeModel("gemini-flash-latest")
+                    response = model.generate_content(full_conversation_text)
+                    flash_response = response.text
+                    provider_used = "gemini"
+                except Exception as e:
+                    logger.error(f"Chat: Gemini failed: {e}")
+            
+            # C. Mock Fallback
+            if not flash_response:
+                logger.warning("Chat: All AI providers failed. Using Mock.")
+                flash_response = "I'm currently experiencing high traffic and cannot connect to my AI brain. Please try again in a moment! (System: AI providers unavailable)"
+                provider_used = "mock"
+
+        except Exception as e:
+            logger.exception("Chat: Critical error during generation.")
+            flash_response = "I encountered a critical error. Please check the system logs."
+            provider_used = "error"
+
+        # 4. Save Assistant Response
+        try:
+            new_model_entry = ChatHistory(session_id=session_id, role='assistant', content=flash_response)
             db.session.add(new_model_entry)
             db.session.commit()
-            logger.info(f"Flash response saved to DB for session {session_id}.")
-
-            return jsonify({
-                "success": True,
-                "reply": flash_response,
-                "metadata": {
-                    "model": "gemini-1.5-flash",
-                    "session_id": session_id,
-                    "timestamp": datetime.utcnow().isoformat() + "Z"
-                }
-            }), 200
-
-        except genai.types.BlockedPromptException as e:
-            logger.warning(f"Prompt blocked by safety settings for session {session_id}: {e.response.prompt_feedback}")
-            db.session.rollback() # Rollback user message if AI interaction fails
-            return jsonify({
-                "success": False,
-                "error": "Your message was blocked by AI safety settings. Please try rephrasing your query.",
-                "suggestion": "Please try rephrasing your query to adhere to safety guidelines.",
-                "code": "PROMPT_BLOCKED",
-                "details": str(e.response.prompt_feedback)
-            }), 400
-        except google.api_core.exceptions.ResourceExhausted as e:
-            logger.error(f"Gemini API Quota Exceeded for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "Flash is experiencing high traffic or your API quota has been exhausted. Please try again in a few minutes or after some time.",
-                "code": "RATE_LIMIT_EXCEEDED",
-                "suggestion": "You might have exceeded your Gemini API quota (e.g., 50 requests/day for gemini-1.5-flash-free-tier). Please wait or consider upgrading your plan.",
-                "details": str(e)
-            }), 429
-        except google.api_core.exceptions.InvalidArgument as e:
-            logger.error(f"Gemini API Invalid Argument for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "Invalid input provided to the AI model. This might be an internal configuration error or an issue with the prompt.",
-                "code": "INVALID_ARGUMENT",
-                "details": str(e)
-            }), 400
-        except google.api_core.exceptions.DeadlineExceeded as e:
-            logger.error(f"Gemini API Timeout for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "AI processing timed out. The model took too long to generate a response.",
-                "code": "TIMEOUT",
-                "suggestion": "Try simplifying your message, asking a more direct question, or try again later. If this persists, your internet connection might be unstable or Google's API is slow.",
-                "details": str(e)
-            }), 408
-        except google.api_core.exceptions.PermissionDenied as e:
-            logger.error(f"Gemini API Permission Denied (403) for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "Permission Denied: Your Gemini API key might be invalid or lacks necessary permissions.",
-                "code": "PERMISSION_DENIED_API_KEY",
-                "suggestion": "Double-check your API key in app.py and ensure it's correctly enabled in Google AI Studio for the Generative Language API.",
-                "details": str(e)
-            }), 403
-        except google.api_core.exceptions.Unauthorized as e:
-            logger.error(f"Gemini API Unauthorized (401) for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "Unauthorized: Invalid or missing Gemini API Key. Please check the key in app.py.",
-                "code": "UNAUTHORIZED_API_KEY",
-                "suggestion": "The API key provided is not valid. Please ensure it's correct and enabled for the Generative Language API. Remember that hardcoding keys is not recommended for production.",
-                "details": str(e)
-            }), 401
-        except google.api_core.exceptions.ServiceUnavailable as e:
-            logger.error(f"Gemini API Service Unavailable (503) for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "Gemini AI service is temporarily unavailable or experiencing issues.",
-                "code": "SERVICE_UNAVAILABLE",
-                "suggestion": "This is likely a temporary issue with Google's API. Please try again in a few minutes.",
-                "details": str(e)
-            }), 503
-        except google.api_core.exceptions.InternalServerError as e:
-            logger.error(f"Gemini API Internal Server Error (500) for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "An internal error occurred with the Gemini API. Please try again later.",
-                "code": "GEMINI_API_INTERNAL_ERROR",
-                "suggestion": "This is likely a temporary issue with Google's API. Try again in a few moments.",
-                "details": str(e)
-            }), 500
-        except google.api_core.exceptions.GoogleAPIError as e:
-            logger.error(f"Generic Google API Error for session {session_id}: {e}")
-            db.session.rollback()
-            return jsonify({
-                "success": False,
-                "error": "An unexpected error occurred with the Gemini API. Please try again later.",
-                "code": "GEMINI_API_GENERIC_ERROR",
-                "details": str(e)
-            }), 500
         except Exception as e:
-            logger.exception(f"An unexpected error occurred during AI interaction for session {session_id}.")
-            db.session.rollback()
-            return jsonify({"success": False, "error": f"An unexpected server error occurred: {str(e)}"}), 500
+            logger.error(f"Chat: Failed to save assistant response: {e}")
+            # Don't fail request if just save failed, return response to user
+        
+        return jsonify({
+            "success": True,
+            "reply": flash_response,
+            "metadata": {
+                "model": provider_used,
+                "session_id": session_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 200
     
+    # --- Motivation & Profile Routes ---
+    
+    @app.route('/api/motivation', methods=['GET'])
+    def get_motivation_quote():
+        quotes = [
+          "🎯 Your future self is counting on today's efforts!",
+          "🚀 Every algorithm you learn opens new possibilities!",
+          "⚡ Consistency beats perfection - keep going!",
+          "🧠 You're building the mind of tomorrow!",
+          "🔥 Progress over perfection, always!",
+          "💪 Your dedication today creates tomorrow's opportunities!"
+        ]
+        return jsonify({"quote": random.choice(quotes)}), 200
+
+    @app.route('/api/user/profile', methods=['GET'])
+    def get_user_profile():
+        # In a real app, this would fetch from DB based on auth token
+        return jsonify({"name": "Flash Learner"}), 200
+
     # --- Database-related API Routes --- (These routes interact with the DB directly)
 
     @app.route('/api/chat', methods=['POST'])
@@ -534,7 +574,7 @@ def create_app():
                 return jsonify({"error": f"Missing required field in skill data: {e}"}), 400
             except Exception as e:
                 db.session.rollback()
-                logger.error(f"Error adding skill: {e}")
+                logger.error(f"Error processing skill data: {str(e)}") # Corrected line: Removed extra ')' here
                 return jsonify({"error": f"Error processing skill data: {str(e)}"}), 500
 
         try:
@@ -690,62 +730,9 @@ def create_app():
             logger.error(f"Error adding progress to skill {skill_id}: {e}")
             return jsonify({"error": f"Failed to add progress: {str(e)}"}), 500
 
-    @app.route('/api/flashcards', methods=['GET'])
-    def get_all_flashcards():
-        flashcards = Flashcard.query.all()
-        return jsonify([card.to_dict() for card in flashcards]), 200
+   
 
-    @app.route('/api/flashcards', methods=['POST'])
-    def add_flashcard():
-        data = request.json
-        if not data or 'question' not in data or 'answer' not in data:
-            return jsonify({"error": "Missing required fields (question, answer)"}), 400
-        
-        try:
-            new_card = Flashcard(
-                question=data['question'],
-                answer=data['answer'],
-                category=data.get('category')
-            )
-            db.session.add(new_card)
-            db.session.commit()
-            return jsonify(new_card.to_dict()), 201
-        except Exception as e:
-            db.session.rollback()
-            logger.error(f"Error adding flashcard: {e}")
-            return jsonify({"error": "Failed to add flashcard"}), 500
-
-    @app.route('/api/learning_sessions', methods=['GET'])
-    def get_all_learning_sessions():
-        sessions = LearningSession.query.order_by(LearningSession.timestamp.desc()).all()
-        return jsonify([s.to_dict() for s in sessions]), 200
-
-    @app.route('/api/learning_sessions', methods=['POST'])
-    def add_learning_session():
-        data = request.json
-        if not data or 'user_id' not in data or 'session_type' not in data:
-            return jsonify({"error": "Missing required fields (user_id, session_type)"}), 400
-        
-        try:
-            new_session = LearningSession(
-                user_id=data['user_id'],
-                flashcard_id=data.get('flashcard_id'),
-                correct=data.get('correct'),
-                session_type=data['session_type'],
-                score=data.get('score'),
-                feedback=data.get('feedback'),
-                questions_data=json.dumps(data.get('questions', [])),
-                answers_data=json.dumps(data.get('answers', []))
-            )
-            db.session.add(new_session)
-            db.session.commit()
-            return jsonify(new_session.to_dict()), 201
-        except Exception as e:
-            db.session.rollback()
-            logger.error(f"Error adding learning session: {e}")
-            return jsonify({"error": "Failed to add learning session"}), 500
-
-    # --- AI Generation Endpoints (These DO NOT save to ChatHistory) ---
+   
 
     @app.route('/api/ai/generate_skills', methods=['POST'])
     def ai_generate_skills():
@@ -788,11 +775,9 @@ def create_app():
         """
         logger.info(f"AI: Generating skills with hint: {category_hint}")
         try:
-            response = flash_model.generate_content(
-                prompt,
-                request_options={"timeout": 120} # Added timeout
-            )
-            skills_json_str = strip_markdown_json(response.text) # Applied stripping
+            skills_json_str = generate_ai_content(prompt, model_type="complex")
+            # Cleanup only if needed (the helper returns string, strip might still be useful if model is chatty)
+            skills_json_str = strip_markdown_json(skills_json_str) 
             logger.info(f"AI: Raw response for generate_skills (after strip): {skills_json_str}")
             
             skills_data = json.loads(skills_json_str)
@@ -864,11 +849,8 @@ def create_app():
         """
         logger.info(f"AI: Generating learning path for skill: {skill_name} ({skill_level})")
         try:
-            response = flash_model.generate_content(
-                prompt,
-                request_options={"timeout": 120} # Added timeout
-            )
-            learning_path_json_str = strip_markdown_json(response.text) # Applied stripping
+            learning_path_json_str = generate_ai_content(prompt, model_type="complex")
+            learning_path_json_str = strip_markdown_json(learning_path_json_str) 
             logger.info(f"AI: Raw response for learning path (after strip): {learning_path_json_str}")
 
             learning_path_data = json.loads(learning_path_json_str)
@@ -913,11 +895,8 @@ def create_app():
         """
         logger.info(f"AI: Generating vocabulary with prompt: {prompt_text[:70]}...")
         try:
-            response = flash_model.generate_content(
-                prompt,
-                request_options={"timeout": 120} # Added timeout
-            )
-            vocab_json_str = strip_markdown_json(response.text) # Applied stripping
+            vocab_json_str = generate_ai_content(prompt)
+            vocab_json_str = strip_markdown_json(vocab_json_str) 
             logger.info(f"AI: Raw response for generate_vocabulary (after strip): {vocab_json_str}")
             
             vocab_data = json.loads(vocab_json_str)
@@ -947,20 +926,30 @@ def create_app():
         if not interview_type:
             return jsonify({"error": "Missing interview_type"}), 400
 
+        # Enhance prompt for Technical/CSE interviews
+        cse_domains = ["Artificial Intelligence", "Database Management Systems", "Operating Systems", "Computer Networks", "Data Structures & Algorithms"]
+        
+        if interview_type.lower() == 'technical':
+            domain_focus = random.choice(cse_domains)
+            prompt_context = f"technical computer science interview questions focused on {domain_focus}. The questions should test core concepts, problem-solving, and database knowledge."
+        else:
+            prompt_context = f"{interview_type} interview questions suitable for a professional interview."
+
         prompt = f"""
-        Generate 5 unique, relevant, and varied {interview_type} interview questions suitable for a GATE exam preparation coaching session. For each question, provide a 'category' (e.g., "Data Structures", "Behavioral") and 'difficulty' (e.g., "Easy", "Medium", "Hard"). Ensure there is a good mix of difficulty levels. IMPORTANT: Respond ONLY with the JSON array. Do NOT include any markdown code block delimiters (e.g., ```json```) or any other text before or after the JSON. Ensure ALL strings within the JSON are properly escaped, especially double quotes and newlines. The JSON should be valid for direct JSON.parse(). Format the response as a JSON array of objects, like this: 
+        Generate 5 unique, relevant, and varied {prompt_context}. 
+        For each question, provide a 'category' (e.g., "{domain_focus if interview_type.lower() == 'technical' else 'General'}", "Behavioral") and 'difficulty' (e.g., "Easy", "Medium", "Hard"). 
+        Ensure there is a good mix of difficulty levels. 
+        
+        IMPORTANT: Respond ONLY with the JSON array. Do NOT include any markdown code block delimiters (e.g., ```json```) or any other text before or after the JSON. Ensure ALL strings within the JSON are properly escaped. The JSON should be valid for direct JSON.parse(). Format the response as a JSON array of objects, like this: 
         [
           {{ "question": "...", "category": "...", "difficulty": "..." }},
           {{ "question": "...", "category": "...", "difficulty": "..." }}
         ]
         """
-        logger.info(f"AI: Generating {interview_type} interview questions.")
+        logger.info(f"AI: Generating {interview_type} interview questions with prompts: {prompt_context}")
         try:
-            response = flash_model.generate_content(
-                prompt,
-                request_options={"timeout": 120} # Added timeout
-            )
-            questions_json_str = strip_markdown_json(response.text) # Applied stripping
+            questions_json_str = generate_ai_content(prompt)
+            questions_json_str = strip_markdown_json(questions_json_str) 
             logger.info(f"AI: Raw response for interview questions (after strip): {questions_json_str}")
 
             questions_data = json.loads(questions_json_str)
@@ -969,15 +958,31 @@ def create_app():
                 raise ValueError("AI response is not a JSON array.")
             
             return jsonify({"message": "Interview questions generated", "questions": questions_data}), 200
-        except json.JSONDecodeError as e:
-            logger.error(f"AI: Failed to parse AI response for interview questions: {e}. Raw response: {questions_json_str}")
-            return jsonify({"error": "AI generated malformed JSON for questions. Please try again.", "details": str(e)}), 500
-        except KeyError as e:
-            logger.error(f"AI: Missing key in AI generated questions data: {e}. Raw response: {questions_json_str}")
-            return jsonify({"error": f"AI generated incomplete question data: Missing key {e}. Please try again."}), 500
         except Exception as e:
-            logger.exception("AI: Error generating interview questions.")
-            return jsonify({"error": f"Failed to generate interview questions: {str(e)}"}), 500
+            logger.exception("AI: Error generating interview questions. Falling back to mock data.")
+            # Fallback Mock Data
+            mock_questions = [
+                { "question": "Explain the difference between a process and a thread in an Operating System.", "category": "Operating Systems", "difficulty": "Medium" },
+                { "question": "What is the time complexity of a binary search algorithm? Explain why.", "category": "Algorithms", "difficulty": "Easy" },
+                { "question": "Describe the ACID properties in a Database Management System.", "category": "DBMS", "difficulty": "Medium" },
+                { "question": "What is a deadlock? What are the necessary conditions for a deadlock to occur?", "category": "Operating Systems", "difficulty": "Hard" },
+                { "question": "Explain the concept of Virtual Memory and Paging.", "category": "Operating Systems", "difficulty": "Medium" }
+            ]
+            if interview_type.lower() == 'hr':
+                mock_questions = [
+                    { "question": "Tell me about a time you faced a challenge and how you overcame it.", "category": "Behavioral", "difficulty": "Medium" },
+                    { "question": "Where do you see yourself in 5 years?", "category": "Behavioral", "difficulty": "Easy" },
+                    { "question": "Why do you want to join this company?", "category": "Behavioral", "difficulty": "Medium" },
+                    { "question": "Describe a conflict you had with a team member and how you resolved it.", "category": "Behavioral", "difficulty": "Hard" },
+                    { "question": "What are your greatest strengths and weaknesses?", "category": "Behavioral", "difficulty": "Medium" }
+                ]
+            
+            # Return mock data handling the error gracefully
+            return jsonify({
+                "message": "AI rate limit reached. Returning cached/mock questions.", 
+                "questions": mock_questions,
+                "is_mock": True
+            }), 200
 
     @app.route('/api/ai/generate_interview_feedback', methods=['POST'])
     def ai_generate_interview_feedback():
@@ -987,24 +992,67 @@ def create_app():
         """
         data = request.json
         prompt_text = data.get('prompt')
-        if not prompt_text:
-            return jsonify({"error": "Prompt text is required"}), 400
+        user_answers = data.get('user_answers', [])
+        questions = data.get('questions', [])
         
-        # If the feedback generation needs conversational context, you would pass history here.
-        # For now, assuming the prompt_text itself contains enough context.
+        if not prompt_text and not (user_answers and questions):
+            return jsonify({"error": "Prompt text or QA data is required"}), 400
         
-        logger.info(f"AI: Generating interview feedback with prompt: {prompt_text[:100]}...")
+        # improved prompt construction
+        final_prompt = prompt_text
+        if not final_prompt:
+            qa_pairs = ""
+            for q, a in zip(questions, user_answers):
+                 qa_pairs += f"Q: {q.get('question', '')}\nA: {a}\n---\n"
+            
+            final_prompt = f"""
+            Analyze the following technical interview Q&A session. 
+            Focus on:
+            1. Technical Accuracy (CSE concepts, SQL, logic).
+            2. Communication Style (clarity, confidence).
+            
+            Q&A Transcript:
+            {qa_pairs}
+            
+            Provide a response in strict JSON format:
+            {{
+                "feedback": "Detailed overall feedback...",
+                "score": 85 (integer out of 100),
+                "strengths": ["..."],
+                "improvements": ["..."]
+            }}
+            Do NOT use markdown blocks.
+            """
+        
+        logger.info(f"AI: Generating interview feedback...")
         try:
-            response = flash_model.generate_content(
-                prompt_text,
-                request_options={"timeout": 120} # Added timeout
-            )
-            feedback_text = strip_markdown_json(response.text) # Applied stripping
-            logger.info(f"AI: Feedback generated (after strip): {feedback_text}")
-            return jsonify({"message": "Feedback generated", "feedback": feedback_text}), 200
+            feedback_json_str = generate_ai_content(final_prompt, model_type="complex")
+            feedback_json_str = strip_markdown_json(feedback_json_str) 
+            logger.info(f"AI: Feedback generated (after strip): {feedback_json_str}")
+            
+            # Try to parse as JSON, but handle plain text fallback if AI fails to follow JSON strictness mostly for legacy prompts
+            try:
+                feedback_data = json.loads(feedback_json_str)
+                return jsonify({"message": "Feedback generated", "feedback": feedback_data.get('feedback'), "score": feedback_data.get('score'), "details": feedback_data}), 200
+            except json.JSONDecodeError:
+                # Fallback for plain text response
+                return jsonify({"message": "Feedback generated", "feedback": feedback_json_str, "score": 70}), 200
+
         except Exception as e:
-            logger.exception("AI: Error generating interview feedback.")
-            return jsonify({"error": f"Failed to generate interview feedback: {str(e)}"}), 500
+            logger.error(f"AI: Error generating AI feedback: {e}")
+            # Mock Feedback Fallback
+            mock_feedback = {
+                "feedback": "AI is currently unavailable due to high traffic. Based on standard metrics: Ensure your answers are concise and cover the core definition first. For technical questions, always mention time complexity. Your communication seems clear.",
+                "score": 75,
+                "strengths": ["Clear articulation", "Attempted all questions"],
+                "improvements": ["Deepen technical depth", "Use more specific examples"]
+            }
+            return jsonify({
+                 "message": "AI rate limit reached. Generated placeholder feedback.", 
+                 "feedback": mock_feedback['feedback'], 
+                 "score": mock_feedback['score'], 
+                 "details": mock_feedback
+            }), 200
 
     @app.route('/api/ai/generate_tech_news', methods=['POST'])
     def ai_generate_tech_news():
@@ -1018,7 +1066,7 @@ def create_app():
 
         # Temporarily override the model's system instruction for this specific call
         tech_news_model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-flash-latest",
             system_instruction=TECH_RADAR_SYSTEM_INSTRUCTION
         )
         logger.info(f"AI: Generating tech news with prompt: {prompt_text[:70]}...")
@@ -1046,6 +1094,98 @@ def create_app():
             logger.exception("AI: Error generating tech news.")
             return jsonify({"error": f"Failed to generate tech news: {str(e)}"}), 500
 
+    @app.route('/api/ai/optimize_code', methods=['POST'])
+    def ai_optimize_code():
+        """
+        Analyzes code, provides complexity analysis, and suggests optimization.
+        """
+        data = request.json
+        code_snippet = data.get('code')
+        language = data.get('language', 'python')
+
+        if not code_snippet:
+            return jsonify({"error": "Code snippet is required"}), 400
+
+        prompt = f"""
+        Analyze the following {language} code snippet. 
+        1. Determine the Time Complexity (Big O).
+        2. Determine the Space Complexity.
+        3. "Roast" the code (give a funny, sarcastic critique of the style/efficiency).
+        4. Provide an OPTIMIZED version of the code (better performance or readability).
+        
+        Code Snippet:
+        {code_snippet}
+
+        Return STRICT JSON format:
+        {{
+            "timeComplexity": "O(n)",
+            "spaceComplexity": "O(1)",
+            "critique": "Your critique here...",
+            "optimizedCode": "The optimized code string..."
+        }}
+        """
+        
+        try:
+            logger.info("AI: Optimizing code...")
+            response_json_str = generate_ai_content(prompt)
+            response_json_str = strip_markdown_json(response_json_str)
+            analysis_data = json.loads(response_json_str)
+            return jsonify(analysis_data), 200
+        except Exception as e:
+            logger.error(f"AI: Error optimizing code: {e}")
+            # Mock Fallback
+            return jsonify({
+                 "timeComplexity": "Unknown",
+                 "spaceComplexity": "Unknown",
+                 "critique": "I couldn't analyze this code right now (AI busy), but it probably needs more comments!",
+                 "optimizedCode": code_snippet
+            }), 200
+
+    @app.route('/api/ai/analyze_resume', methods=['POST'])
+    def ai_analyze_resume():
+        """
+        Analyzes resume text for ATS compatibility and scores it.
+        """
+        data = request.json
+        resume_text = data.get('resume_text')
+        target_role = data.get('target_role', 'Software Engineer')
+
+        if not resume_text:
+            return jsonify({"error": "Resume text is required"}), 400
+
+        prompt = f"""
+        Act as an expert Technical Recruiter and ATS (Applicant Tracking System) specialist.
+        Analyze the following resume text for the role of "{target_role}".
+        
+        Resume Text:
+        {resume_text[:4000]} (truncated if too long)
+        
+        Provide:
+        1. An ATS Score (0-100) based on keyword matching, formatting (implied), and impact.
+        2. Top 3 Strengths.
+        3. Top 3 Weaknesses/Improvements.
+        4. List of detailed Missing Keywords/Skills that are crucial for this role but missing.
+        5. A brief professional summary rewrite suggestion.
+
+        Return STRICT JSON format:
+        {{
+            "atsScore": 85,
+            "strengths": ["Strong action verbs", "Good metric usage", "Clear education section"],
+            "weaknesses": ["Missing cloud skills", "Typos in skills section"],
+            "missingKeywords": ["Docker", "Kubernetes", "CI/CD"],
+            "summarySuggestion": "Energetic Software Engineer with..."
+        }}
+        """
+        
+        try:
+            logger.info(f"AI: Analyzing resume for role: {target_role}...")
+            response_json_str = generate_ai_content(prompt, model_type="complex") # Use complex model for deep analysis
+            response_json_str = strip_markdown_json(response_json_str)
+            analysis_data = json.loads(response_json_str)
+            return jsonify(analysis_data), 200
+        except Exception as e:
+            logger.error(f"AI: Error analyzing resume: {e}")
+            return jsonify({"error": f"Failed to analyze resume: {str(e)}"}), 500
 
     @app.route('/api/ai/suggestion', methods=['POST'])
     def ai_suggestion():
@@ -1078,5 +1218,121 @@ def create_app():
         except Exception as e:
             logger.error(f"AI: Error generating AI suggestion: {e}")
             return jsonify({"error": f"Failed to generate AI suggestion: {str(e)}"}), 500
+
+    # --- NEW NOTES API ROUTES START HERE ---
+    @app.route('/api/notes', methods=['POST'])
+    def create_note():
+        data = request.json
+        if not data or 'content' not in data:
+            return jsonify({"error": "Note content is required"}), 400
+
+        try:
+            new_note = Note(content=data['content'])
+            db.session.add(new_note)
+            db.session.commit()
+            return jsonify(new_note.to_dict()), 201
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error creating note: {e}")
+            return jsonify({"error": f"Failed to create note: {str(e)}"}), 500
+
+    @app.route('/api/notes', methods=['GET'])
+    def get_recent_notes():
+        notes = Note.query.order_by(Note.timestamp.desc()).limit(5).all() 
+        return jsonify([note.to_dict() for note in notes]), 200
+
+    # --- NEW WEEKLY TASKS API ROUTES START HERE ---
+    @app.route('/api/weekly_tasks', methods=['GET'])
+    def get_weekly_tasks():
+        tasks = WeeklyTask.query.order_by(WeeklyTask.completed, WeeklyTask.description).all()
+        return jsonify([task.to_dict() for task in tasks]), 200
+
+    @app.route('/api/weekly_tasks', methods=['POST'])
+    def add_weekly_task():
+        data = request.json
+        if not data or 'description' not in data:
+            return jsonify({"error": "Task description is required"}), 400
+        
+        try:
+            new_task = WeeklyTask(
+                description=data['description'],
+                completed=data.get('completed', False),
+                skill_id=data.get('skillId'),
+                learning_step_id=data.get('learningStepId'),
+                type=data.get('type')
+            )
+            db.session.add(new_task)
+            db.session.commit()
+            return jsonify(new_task.to_dict()), 201
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error adding weekly task: {e}")
+            return jsonify({"error": f"Failed to add weekly task: {str(e)}"}), 500
+
+    @app.route('/api/weekly_tasks/<string:task_id>', methods=['PUT'])
+    def update_weekly_task(task_id):
+        task = WeeklyTask.query.get(task_id)
+        if not task:
+            return jsonify({"error": "Task not found"}), 404
+        
+        data = request.json
+        task.description = data.get('description', task.description)
+        task.completed = data.get('completed', task.completed) # Allow toggling completion
+        task.skill_id = data.get('skillId', task.skill_id)
+        task.learning_step_id = data.get('learningStepId', task.learning_step_id)
+        task.type = data.get('type', task.type)
+
+        try:
+            db.session.commit()
+            return jsonify(task.to_dict()), 200
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error updating task {task_id}: {e}")
+            return jsonify({"error": f"Failed to update task: {str(e)}"}), 500
+
+    @app.route('/api/weekly_tasks/<string:task_id>', methods=['DELETE'])
+    def delete_weekly_task(task_id):
+        task = WeeklyTask.query.get(task_id)
+        if not task:
+            return jsonify({"error": "Task not found"}), 404
+        
+        try:
+            db.session.delete(task)
+            db.session.commit() # Commit the deletion
+            return jsonify({"message": "Task deleted successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error deleting task {task_id}: {e}")
+            return jsonify({"error": f"Failed to delete task: {str(e)}"}), 500
+
+    @app.route('/api/learning_sessions', methods=['GET'])
+    def get_learning_sessions():
+        user_id = request.args.get('user_id', 1) # Default to 1 for now
+        sessions = LearningSession.query.filter_by(user_id=user_id).order_by(LearningSession.timestamp.desc()).all()
+        return jsonify([session.to_dict() for session in sessions]), 200
+
+    @app.route('/api/learning_sessions', methods=['POST'])
+    def create_learning_session():
+        data = request.json
+        if not data or 'session_type' not in data:
+            return jsonify({"error": "Missing session_type"}), 400
+
+        try:
+            new_session = LearningSession(
+                user_id=data.get('user_id', 1),
+                session_type=data['session_type'],
+                score=data.get('score'),
+                feedback=data.get('feedback'),
+                questions_data=json.dumps(data.get('questions', [])),
+                answers_data=json.dumps(data.get('answers', [])),
+                correct=data.get('correct') # Optional
+            )
+            db.session.add(new_session)
+            db.session.commit()
+            return jsonify(new_session.to_dict()), 201
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error creating learning session: {e}")
+            return jsonify({"error": f"Failed to create session: {str(e)}"}), 500
 
     return app

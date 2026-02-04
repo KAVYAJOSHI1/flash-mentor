@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext, useEffect, useCallback, ReactNode } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 
 // Define the shape of a learning session
 interface LearningSession {
