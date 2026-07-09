@@ -7,11 +7,7 @@ const router = express.Router();
 // CONFIGURATION FOR GEMINI API
 // ===========================================================================
 
-// !!! WARNING !!! SECURITY RISK !!! WARNING !!!
-// This API key is hardcoded directly in the file as per your request.
-// For ANY real-world application, ALWAYS use environment variables (e.g., .env file, process.env).
-// DO NOT COMMIT THIS FILE WITH YOUR ACTUAL KEY TO VERSION CONTROL (e.g., Git).
-const GEMINI_API_KEY: string = "AIzaSyDSqV1j87XH1BuBKefPg-mGABwepjrcIBw"; // <--- YOUR KEY IS NOW HARDCODED HERE
+const GEMINI_API_KEY: string = process.env.GEMINI_API_KEY || "";
 
 // Gemini API endpoint for gemini-1.5-flash-latest model
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;

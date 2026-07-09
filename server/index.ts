@@ -1,5 +1,5 @@
-// REMOVED: import dotenv from "dotenv";
-// REMOVED: dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 import express, { Request, Response } from "express";
 import cors from "cors";
