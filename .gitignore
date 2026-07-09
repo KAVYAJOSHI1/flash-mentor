@@ -7,3 +7,5 @@ client/flash-client/dist/
 .DS_Store
 *.pyc
 *.db
+.env
+*.env
